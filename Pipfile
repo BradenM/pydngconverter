@@ -1,0 +1,24 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+flake8 = "*"
+autopep8 = "*"
+isort = "*"
+ray = {extras = ["debug"],version = "*"}
+autoflake = "*"
+coveralls = "*"
+pylint = "*"
+pytest = "*"
+bump2version = "*"
+tox = "*"
+tox-pyenv = "*"
+pytest-mock = "*"
+pydngconverter = {editable = true,path = "."}
+pytest-coverage = "*"
+
+[packages]
+ray = "*"
+psutil = "*"
