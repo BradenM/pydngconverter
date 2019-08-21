@@ -64,6 +64,34 @@ class Compression(CliFlag):
 
 
 class DNGConverter:
+    """Python Interface to Adobe DNG Converter
+
+    Takes the same parameters as the Adobe DNG Converter, but uses
+    enums and such to make it easier to use.
+
+    Args:
+        source (os.Pathlike): Path to source directory containing raw files
+        dest (os.Pathlike, optional): Path to destination.
+            Defaults to source directory.
+        compressed (Compression, optional): Enable DNG Compression.
+            Defaults to Compression.YES.
+        camera_raw (CRawCompat, optional): Set Camera Raw Compat vers.
+             Defaults to CRawCompat.latest().
+        dng_version (DNGVersion, optional): Set DNG Backwards Compat vers.
+             Defaults to DNGVersion.latest().
+        jpeg_preview (JPEGPreview, optional): JPEG Preview size.
+             Defaults to JPEGPreview.MEDIUM.
+        fast_load (bool, optional): Embed fast load data (for jpeg preview).
+             Defaults to False.
+        linear (bool, optional): Output linear DNG files.
+             Defaults to False.
+
+    Raises:
+        FileNotFoundError: DNG Converter cannot be found.
+        NotADirectoryError: Source directory does not exist
+             or is not a directory.
+    """
+
     def __init__(self,
                  source,
                  dest=None,
@@ -92,6 +120,17 @@ class DNGConverter:
         self.source = self.source.absolute()
 
     def resolve_flag(self, flag, value, on_true=None):
+        """Resolves boolean or special flags
+
+        Args:
+            flag (str): Flag that DNGConverter takes.
+            value (any): Value used to resolve.
+            on_true (callable, optional): Alternative callback on true.
+                 Defaults to None.
+
+        Returns:
+            str: Resolved flag as string.
+        """
         if value:
             if on_true:
                 return on_true(flag)
@@ -100,23 +139,42 @@ class DNGConverter:
 
     @property
     def dest(self):
+        """Destination flag property
+
+        Returns:
+            tuple: Tuple containing flag and destination
+        """
         if not self.dest_path:
             return ""
         return ("-d", str(self.dest_path.absolute()))
 
     @property
     def args(self):
+        """Args that will be passed to DNGConverter
+
+        Returns:
+            list: List of args to pass
+        """
         return [str(self.prog_path), self.compressed,
                 self.camera_raw, self.dng_version,
                 self.fast_load, self.linear, self.jpeg_preview,
                 *self.dest]
 
     def convert(self):
+        """Convert all files in source directory"""
         files = self.source.rglob("*.CR2")
         for p in files:
             print(f"Converting: {p.name} => {p.with_suffix('.dng').name}")
             self.convert_file(p)
 
     def convert_file(self, path):
+        """Converts a single file to .DNG"
+
+        Args:
+            path (os.Pathlike): Path to file
+
+        Returns:
+            CompletedProcess: Spawned instance of DNG converter
+        """
         return subproc.run(self.args + [str(path)], stdout=subproc.DEVNULL,
                            stderr=subproc.DEVNULL)
