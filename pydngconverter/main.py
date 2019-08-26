@@ -7,6 +7,8 @@ from enum import Enum
 from pathlib import Path
 
 import ray
+from wand.image import Image
+
 from pydngconverter import utils
 
 
@@ -29,6 +31,7 @@ class JPEGPreview(CliFlag):
     NONE = 0
     MEDIUM = 1
     FULL = 2
+    EXTRACT = 3
 
     @property
     def name(self):
@@ -110,7 +113,7 @@ class DNGConverter:
         self.compressed = compressed.flag
         self.camera_raw = camera_raw.flag
         self.dng_version = dng_version.flag
-        self.jpeg_preview = jpeg_preview.flag
+        self.jpeg_preview = jpeg_preview
         self.dest_path = dest
         self.linear = self.resolve_flag("l", linear)
         self.fast_load = self.resolve_flag("fl", fast_load)
@@ -164,37 +167,80 @@ class DNGConverter:
         Returns:
             list: List of args to pass
         """
-        return [str(self.prog_path), self.compressed,
-                self.camera_raw, self.dng_version,
-                self.fast_load, self.linear, self.jpeg_preview]
+        _args = [str(self.prog_path), self.compressed,
+                 self.camera_raw, self.dng_version,
+                 self.fast_load, self.linear]
+        if self.jpeg_preview != JPEGPreview.EXTRACT:
+            _args.append(self.jpeg_preview.flag)
+        return _args
 
     def convert_multiproc(self, raw_files):
-        """Convert with multiprocessing."""
+        """Convert with multiprocessing.
+
+        Args:
+            raw_files ([os.Pathlike]): Paths to raw files
+
+        Returns:
+            tuple: List of DNG paths,
+                List of thumbnail paths if JPEGPreview.EXTRACT is passed.
+                Defaults to None
+        """
+        rem_extract_thumb = ray.remote(DNGConverter.extract_thumbnail)
         rem_convert_path = ray.remote(DNGConverter.convert_file)
         raw_files = [str(p) for p in raw_files]
         img_ids = [ray.put(i) for i in raw_files]
+        thumbs = None
+        if self.jpeg_preview == JPEGPreview.EXTRACT:
+            thumbs = ray.get([rem_extract_thumb.remote(i, self.dest)
+                              for i in img_ids])
         converted = ray.get([rem_convert_path.remote(
             i, self.dest, self.args) for i in img_ids])
+        return (converted, thumbs)
 
     def convert(self):
         """Convert all files in source directory"""
         files = self.source.rglob("*.CR2")
         _, dest_path = self.dest
         Path(dest_path).mkdir(exist_ok=True)
-        if ray and self.multiprocess:
+        if self.multiprocess:
             return self.convert_multiproc(files)
         for p in files:
-            self.convert_file(p)
+            if self.jpeg_preview == JPEGPreview.EXTRACT:
+                self.extract_thumbnail(p, self.dest)
+            self.convert_file(str(p), self.dest, self.args)
 
-    def convert_file(self, path):
+    @staticmethod
+    def extract_thumbnail(path, dest):
+        """Extract thumbnail from exif data
+
+        Args:
+            path (str): path to raw file
+            dest (str): path to save thumbnail
+
+        Returns:
+            str: thumbnail path
+        """
+        if not path:
+            return
+        args = "exiftool -b -previewImage".split()
+        thumb_bytes = subproc.run([*args, path], stdout=subproc.PIPE).stdout
+        out_name = Path(path).with_suffix('.thumb.jpg').name
+        out_path = Path(dest[1]) / out_name
+        print(f"Extracting Thumbnail: {out_name}")
+        with Image(blob=thumb_bytes) as img:
+            img.resize(int(img.width*.10), int(img.height*.10))
+            img.rotate(270)
+            img.save(filename=str(out_path))
+        return str(out_path)
 
     @staticmethod
     def convert_file(path, dest, dng_args):
         """Converts a single file to .DNG"
 
         Args:
-            path (os.Pathlike): Path to file
-            dest (tuple):
+            path (os.Pathlike): Path to file.
+            dest (tuple): Destination flag and path.
+            dng_args ([str]): Additional args to pass to DNG Converter.
 
         Returns:
             CompletedProcess: Spawned instance of DNG converter
