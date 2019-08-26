@@ -6,6 +6,7 @@ import subprocess as subproc
 from enum import Enum
 from pathlib import Path
 
+import ray
 from pydngconverter import utils
 
 
@@ -85,6 +86,8 @@ class DNGConverter:
              Defaults to False.
         linear (bool, optional): Output linear DNG files.
              Defaults to False.
+        multiprocess (bool, optional): Conver multiple files at once.
+             Defaults to True.
 
     Raises:
         FileNotFoundError: DNG Converter cannot be found.
@@ -100,7 +103,9 @@ class DNGConverter:
                  dng_version=DNGVersion.latest(),
                  jpeg_preview=JPEGPreview.MEDIUM,
                  fast_load=False,
-                 linear=False):
+                 linear=False,
+                 multiprocess=True,
+                 ray_args={}):
         self.prog_path = utils.locate_program("dngconverter")
         self.compressed = compressed.flag
         self.camera_raw = camera_raw.flag
@@ -110,6 +115,10 @@ class DNGConverter:
         self.linear = self.resolve_flag("l", linear)
         self.fast_load = self.resolve_flag("fl", fast_load)
         self.dest_path = self.resolve_flag(dest, dest, Path)
+        self.multiprocess = multiprocess
+        self.ray_args = ray_args
+        if self.multiprocess and not ray.is_initialized():
+            ray.init(**self.ray_args)
 
         if not self.prog_path:
             raise FileNotFoundError("DNGConverter is not installed!")
@@ -157,24 +166,46 @@ class DNGConverter:
         """
         return [str(self.prog_path), self.compressed,
                 self.camera_raw, self.dng_version,
-                self.fast_load, self.linear, self.jpeg_preview,
-                *self.dest]
+                self.fast_load, self.linear, self.jpeg_preview]
+
+    def convert_multiproc(self, raw_files):
+        """Convert with multiprocessing."""
+        rem_convert_path = ray.remote(DNGConverter.convert_file)
+        raw_files = [str(p) for p in raw_files]
+        img_ids = [ray.put(i) for i in raw_files]
+        converted = ray.get([rem_convert_path.remote(
+            i, self.dest, self.args) for i in img_ids])
 
     def convert(self):
         """Convert all files in source directory"""
         files = self.source.rglob("*.CR2")
+        _, dest_path = self.dest
+        Path(dest_path).mkdir(exist_ok=True)
+        if ray and self.multiprocess:
+            return self.convert_multiproc(files)
         for p in files:
-            print(f"Converting: {p.name} => {p.with_suffix('.dng').name}")
             self.convert_file(p)
 
     def convert_file(self, path):
+
+    @staticmethod
+    def convert_file(path, dest, dng_args):
         """Converts a single file to .DNG"
 
         Args:
             path (os.Pathlike): Path to file
+            dest (tuple):
 
         Returns:
             CompletedProcess: Spawned instance of DNG converter
         """
-        return subproc.run(self.args + [str(path)], stdout=subproc.DEVNULL,
-                           stderr=subproc.DEVNULL)
+        if not path:
+            return
+        suffix = path.split('.')[-1]
+        dest_file = path.replace(f".{suffix}", ".dng")
+        d_flag, d_parent = dest
+        dng_args.extend([*dest, str(path)])
+        print(f"Converting: {path} => {dest_file}")
+        subproc.run(dng_args, stdout=subproc.DEVNULL,
+                    stderr=subproc.DEVNULL)
+        return dest_file

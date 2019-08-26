@@ -16,11 +16,11 @@ VERSION = '0.0.0'  # Update via bumpversion
 
 # Required Packages
 REQUIRED = [
-    'click',
+    "ray",
+    "wand"
 ]
 
 EXTRAS = {}
-
 
 here = os.path.abspath(os.path.dirname(__file__))
 

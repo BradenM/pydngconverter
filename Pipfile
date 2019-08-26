@@ -7,7 +7,6 @@ verify_ssl = true
 flake8 = "*"
 autopep8 = "*"
 isort = "*"
-ray = {extras = ["debug"],version = "*"}
 autoflake = "*"
 coveralls = "*"
 pylint = "*"
@@ -16,9 +15,11 @@ bump2version = "*"
 tox = "*"
 tox-pyenv = "*"
 pytest-mock = "*"
-pydngconverter = {editable = true,path = "."}
+pydngconverter = {editable = true,extras = ["multiproc"],path = "."}
 pytest-coverage = "*"
+ray = {extras = ["debug"],version = "*"}
 
 [packages]
 ray = "*"
 psutil = "*"
+wand = "*"
