@@ -109,7 +109,7 @@ class DNGConverter:
                  linear=False,
                  multiprocess=True,
                  ray_args={}):
-        self.prog_path = utils.locate_program("dngconverter")
+        self.prog_path = self.resolve_binary("dngconverter")
         self.compressed = compressed.flag
         self.camera_raw = camera_raw.flag
         self.dng_version = dng_version.flag
@@ -119,17 +119,35 @@ class DNGConverter:
         self.fast_load = self.resolve_flag("fl", fast_load)
         self.dest_path = self.resolve_flag(dest, dest, Path)
         self.multiprocess = multiprocess
-        self.ray_args = ray_args
-        if self.multiprocess and not ray.is_initialized():
-            ray.init(**self.ray_args)
 
-        if not self.prog_path:
-            raise FileNotFoundError("DNGConverter is not installed!")
+        if self.multiprocess and not ray.is_initialized():
+            ray.init(**ray_args)
+
+        if self.jpeg_preview == JPEGPreview.EXTRACT:
+            self.exif_path = self.resolve_binary("exiftool")
+
         self.source = utils.ensure_existing_dir(source)
         if not self.source:
             raise NotADirectoryError(
                 f"{source} does not exists or is not a directory!")
         self.source = self.source.absolute()
+
+    def resolve_binary(self, binary_name):
+        """Resolves path to binary executable
+
+        Args:
+            binary_name (str): Executable name
+
+        Raises:
+            FileNotFoundError: Raised when binary is not found
+
+        Returns:
+            os.Pathlike: Path to binary
+        """
+        path = utils.locate_program(binary_name)
+        if not path:
+            raise FileNotFoundError(f"{binary_name} is not installed!")
+        return path
 
     def resolve_flag(self, flag, value, on_true=None):
         """Resolves boolean or special flags
@@ -191,8 +209,8 @@ class DNGConverter:
         img_ids = [ray.put(i) for i in raw_files]
         thumbs = None
         if self.jpeg_preview == JPEGPreview.EXTRACT:
-            thumbs = ray.get([rem_extract_thumb.remote(i, self.dest)
-                              for i in img_ids])
+            thumbs = ray.get([rem_extract_thumb.remote(
+                i, self.dest, self.exif_path) for i in img_ids])
         converted = ray.get([rem_convert_path.remote(
             i, self.dest, self.args) for i in img_ids])
         return (converted, thumbs)
@@ -206,23 +224,25 @@ class DNGConverter:
             return self.convert_multiproc(files)
         for p in files:
             if self.jpeg_preview == JPEGPreview.EXTRACT:
-                self.extract_thumbnail(p, self.dest)
+                self.extract_thumbnail(p, self.dest, self.exif_path)
             self.convert_file(str(p), self.dest, self.args)
 
     @staticmethod
-    def extract_thumbnail(path, dest):
+    def extract_thumbnail(path, dest, exif_path=None):
         """Extract thumbnail from exif data
 
         Args:
             path (str): path to raw file
             dest (str): path to save thumbnail
+            exif_path (str): Path to exiftool
 
         Returns:
             str: thumbnail path
         """
         if not path:
             return
-        args = "exiftool -b -previewImage".split()
+        exif_path = exif_path or "exiftool"
+        args = f"{exif_path} -b -previewImage".split()
         thumb_bytes = subproc.run([*args, path], stdout=subproc.PIPE).stdout
         out_name = Path(path).with_suffix('.thumb.jpg').name
         out_path = Path(dest[1]) / out_name
