@@ -89,8 +89,10 @@ class DNGConverter:
              Defaults to False.
         linear (bool, optional): Output linear DNG files.
              Defaults to False.
-        multiprocess (bool, optional): Conver multiple files at once.
+        multiprocess (bool, optional): Convert multiple files at once.
              Defaults to True.
+        ray_args (dict, optional): Additonal args to pass to ray.
+             Defaults to {}.
 
     Raises:
         FileNotFoundError: DNG Converter cannot be found.
@@ -266,7 +268,7 @@ class DNGConverter:
             dng_args ([str]): Additional args to pass to DNG Converter.
 
         Returns:
-            CompletedProcess: Spawned instance of DNG converter
+           str: Path to DNG file
         """
         if not path:
             return
