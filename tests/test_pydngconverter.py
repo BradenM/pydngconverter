@@ -18,6 +18,21 @@ def mock_dng(mocker):
     return "/usr/bin/dngconverter"
 
 
+@pytest.fixture
+def mock_rglob(mocker):
+    """Mock raw file rglob search"""
+    mock_val = (Path("/foo/one.CR2"), Path("/foo/two.CR2"))
+    mock_rglob = mocker.patch.object(pydng.main.Path, 'rglob')
+    mock_rglob.return_value = (Path("/foo/one.CR2"), Path("/foo/two.CR2"))
+    return mock_val
+
+
+@pytest.fixture
+def mock_subproc(mocker):
+    mock_subproc = mocker.patch.object(pydng.main.subproc, "run")
+    return mock_subproc
+
+
 def test_init(mocker, tmp_path):
     """Should fail if converter cannot be found"""
     mock_which = mocker.patch.object(pydng.main.utils.shutil, "which")
@@ -52,7 +67,7 @@ def test_destination(mock_dng, tmp_path):
     tmp_dest = tmp_path / 'dest'
     tmp_dest.mkdir()
     dng = pydng.DNGConverter(tmp_path)
-    assert dng.dest == ""
+    assert dng.dest == ("", "")
     dng = pydng.DNGConverter(tmp_path, dest=tmp_dest)
     assert dng.dest == ("-d", str(tmp_dest.absolute()))
 
@@ -69,12 +84,36 @@ def test_args(mock_dng, tmp_path):
     assert sorted(dng.args) == sorted(expect_args)
 
 
-def test_convert(mock_dng, mocker, tmp_path):
-    mock_rglob = mocker.patch.object(pydng.main.Path, 'rglob')
-    mock_rglob.return_value = (Path("/foo/one.CR2"), Path("/foo/two.CR2"))
-    mock_subproc = mocker.patch.object(pydng.main.subproc, "run")
-    dng = pydng.DNGConverter(tmp_path)
+def test_convert(mock_dng, mocker, tmp_path, mock_rglob, mock_subproc):
+    dng = pydng.DNGConverter(tmp_path, multiprocess=False)
     dng.convert()
-    expect_args = dng.args + ["/foo/two.CR2"]
+    expect_args = dng.args + ["", "", "/foo/two.CR2"]
     mock_subproc.assert_called_with(
         expect_args, stderr=mocker.ANY, stdout=mocker.ANY)
+
+
+def test_multi_convert(mock_dng, mocker, tmp_path, mock_rglob, mock_subproc):
+    mock_ray = mocker.patch.object(pydng.main, 'ray')
+    mock_ray.is_initialized.return_value = False
+    dng = pydng.DNGConverter(tmp_path, multiprocess=True)
+    mock_ray.init.assert_called_once()
+    dng.convert()
+    mock_ray.remote.assert_called_with(dng.convert_file)
+    # with extract thumbnail
+    dng = pydng.DNGConverter(tmp_path, multiprocess=True,
+                             jpeg_preview=pydng.JPEGPreview.EXTRACT)
+    mock_ray.remote.assert_any_call(dng.extract_thumbnail)
+    mock_ray.remote.assert_any_call(dng.convert_file)
+
+
+def test_extract_thumbnail(mock_dng, mocker, tmp_path, mock_rglob,
+                           mock_subproc):
+    mock_image = mocker.patch.object(pydng.main, "Image")
+    type(mock_subproc.return_value).stdout = mocker.PropertyMock(
+        return_value=b"some binary image stuff")
+    dng = pydng.DNGConverter(tmp_path,
+                             multiprocess=False,
+                             jpeg_preview=pydng.JPEGPreview.EXTRACT)
+    dng.convert()
+    mock_image.assert_called_with(blob=b"some binary image stuff")
+    assert mock_image.call_count == 2

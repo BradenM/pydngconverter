@@ -175,7 +175,7 @@ class DNGConverter:
             tuple: Tuple containing flag and destination
         """
         if not self.dest_path:
-            return ""
+            return ("", "")
         return ("-d", str(self.dest_path.absolute()))
 
     @property
@@ -222,10 +222,13 @@ class DNGConverter:
         Path(dest_path).mkdir(exist_ok=True)
         if self.multiprocess:
             return self.convert_multiproc(files)
-        for p in files:
-            if self.jpeg_preview == JPEGPreview.EXTRACT:
-                self.extract_thumbnail(p, self.dest, self.exif_path)
-            self.convert_file(str(p), self.dest, self.args)
+        thumbs = None
+        if self.jpeg_preview == JPEGPreview.EXTRACT:
+            thumbs = [self.extract_thumbnail(
+                p, self.dest, self.exif_path) for p in files]
+        converted = [self.convert_file(
+            str(p), self.dest, self.args) for p in files]
+        return (converted, thumbs)
 
     @staticmethod
     def extract_thumbnail(path, dest, exif_path=None):
