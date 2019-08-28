@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 
-"""pydngconverter utils"""
+"""
+pydngconverter.utils
+====================================
+Utility functions for PyDNGConverter
+"""
 
 import shutil
 from pathlib import Path

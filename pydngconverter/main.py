@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 
-"""Main module."""
+"""
+pydngconverter.main
+====================================
+PyDNGConverter Code Module
+"""
 
 import subprocess as subproc
 from enum import Enum

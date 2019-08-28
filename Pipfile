@@ -18,6 +18,7 @@ pytest-mock = "*"
 pydngconverter = {editable = true,extras = ["multiproc"],path = "."}
 pytest-coverage = "*"
 ray = {extras = ["debug"],version = "*"}
+sphinx = "*"
 
 [packages]
 ray = "*"
