@@ -1,0 +1,365 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Welcome to PyDNGConverter’s documentation! &#8212; PyDNGConverter 0.1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-pydngconverter">
+<span id="welcome-to-pydngconverter-s-documentation"></span><h1>Welcome to PyDNGConverter’s documentation!<a class="headerlink" href="#module-pydngconverter" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="pydngconverter">
+<h2>PyDngConverter<a class="headerlink" href="#pydngconverter" title="Permalink to this headline">¶</a></h2>
+<p>A Python Interface to Adobe’s DNG Converter.</p>
+<p>Uses multiprocessing and Image manipulation to significantly
+speed up the process of convering RAW images to DNG.</p>
+<dl class="class">
+<dt id="pydngconverter.DNGConverter">
+<em class="property">class </em><code class="sig-prename descclassname">pydngconverter.</code><code class="sig-name descname">DNGConverter</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">dest=None</em>, <em class="sig-param">compressed=&lt;Compression.YES: 'c'&gt;</em>, <em class="sig-param">camera_raw=&lt;CRawCompat.ELEVEN_TWO: 11.2&gt;</em>, <em class="sig-param">dng_version=&lt;DNGVersion.ONE_FOUR: 1.4&gt;</em>, <em class="sig-param">jpeg_preview=&lt;JPEGPreview.MEDIUM: 1&gt;</em>, <em class="sig-param">fast_load=False</em>, <em class="sig-param">linear=False</em>, <em class="sig-param">multiprocess=True</em>, <em class="sig-param">ray_args={}</em><span class="sig-paren">)</span><a class="headerlink" href="#pydngconverter.DNGConverter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Python Interface to Adobe DNG Converter</p>
+<p>Takes the same parameters as the Adobe DNG Converter, but uses
+enums and such to make it easier to use.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> (<em>os.Pathlike</em>) – Path to source directory containing raw files</p></li>
+<li><p><strong>dest</strong> (<em>os.Pathlike</em><em>, </em><em>optional</em>) – Path to destination.
+Defaults to source directory.</p></li>
+<li><p><strong>compressed</strong> (<a class="reference internal" href="#pydngconverter.Compression" title="pydngconverter.Compression"><em>Compression</em></a><em>, </em><em>optional</em>) – Enable DNG Compression.
+Defaults to Compression.YES.</p></li>
+<li><p><strong>camera_raw</strong> (<a class="reference internal" href="#pydngconverter.CRawCompat" title="pydngconverter.CRawCompat"><em>CRawCompat</em></a><em>, </em><em>optional</em>) – Set Camera Raw Compat vers.
+Defaults to CRawCompat.latest().</p></li>
+<li><p><strong>dng_version</strong> (<a class="reference internal" href="#pydngconverter.DNGVersion" title="pydngconverter.DNGVersion"><em>DNGVersion</em></a><em>, </em><em>optional</em>) – Set DNG Backwards Compat vers.
+Defaults to DNGVersion.latest().</p></li>
+<li><p><strong>jpeg_preview</strong> (<a class="reference internal" href="#pydngconverter.JPEGPreview" title="pydngconverter.JPEGPreview"><em>JPEGPreview</em></a><em>, </em><em>optional</em>) – JPEG Preview size.
+Defaults to JPEGPreview.MEDIUM.</p></li>
+<li><p><strong>fast_load</strong> (<em>bool</em><em>, </em><em>optional</em>) – Embed fast load data (for jpeg preview).
+Defaults to False.</p></li>
+<li><p><strong>linear</strong> (<em>bool</em><em>, </em><em>optional</em>) – Output linear DNG files.
+Defaults to False.</p></li>
+<li><p><strong>multiprocess</strong> (<em>bool</em><em>, </em><em>optional</em>) – Convert multiple files at once.
+Defaults to True.</p></li>
+<li><p><strong>ray_args</strong> (<em>dict</em><em>, </em><em>optional</em>) – Additonal args to pass to ray.
+Defaults to {}.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>FileNotFoundError</strong> – DNG Converter cannot be found.</p></li>
+<li><p><strong>NotADirectoryError</strong> – Source directory does not exist
+    or is not a directory.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="pydngconverter.DNGConverter.args">
+<em class="property">property </em><code class="sig-name descname">args</code><a class="headerlink" href="#pydngconverter.DNGConverter.args" title="Permalink to this definition">¶</a></dt>
+<dd><p>Args that will be passed to DNGConverter</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>List of args to pass</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pydngconverter.DNGConverter.convert">
+<code class="sig-name descname">convert</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pydngconverter.DNGConverter.convert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert all files in source directory</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pydngconverter.DNGConverter.convert_file">
+<em class="property">static </em><code class="sig-name descname">convert_file</code><span class="sig-paren">(</span><em class="sig-param">path</em>, <em class="sig-param">dest</em>, <em class="sig-param">dng_args</em><span class="sig-paren">)</span><a class="headerlink" href="#pydngconverter.DNGConverter.convert_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a single file to .DNG”</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>os.Pathlike</em>) – Path to file.</p></li>
+<li><p><strong>dest</strong> (<em>tuple</em>) – Destination flag and path.</p></li>
+<li><p><strong>dng_args</strong> (<em>[</em><em>str</em><em>]</em>) – Additional args to pass to DNG Converter.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Path to DNG file</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pydngconverter.DNGConverter.convert_multiproc">
+<code class="sig-name descname">convert_multiproc</code><span class="sig-paren">(</span><em class="sig-param">raw_files</em><span class="sig-paren">)</span><a class="headerlink" href="#pydngconverter.DNGConverter.convert_multiproc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert with multiprocessing.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>raw_files</strong> (<em>[</em><em>os.Pathlike</em><em>]</em>) – Paths to raw files</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>List of DNG paths,</dt><dd><p>List of thumbnail paths if JPEGPreview.EXTRACT is passed.
+Defaults to None</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pydngconverter.DNGConverter.dest">
+<em class="property">property </em><code class="sig-name descname">dest</code><a class="headerlink" href="#pydngconverter.DNGConverter.dest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Destination flag property</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Tuple containing flag and destination</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pydngconverter.DNGConverter.extract_thumbnail">
+<em class="property">static </em><code class="sig-name descname">extract_thumbnail</code><span class="sig-paren">(</span><em class="sig-param">path</em>, <em class="sig-param">dest</em>, <em class="sig-param">exif_path=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pydngconverter.DNGConverter.extract_thumbnail" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract thumbnail from exif data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>str</em>) – path to raw file</p></li>
+<li><p><strong>dest</strong> (<em>str</em>) – path to save thumbnail</p></li>
+<li><p><strong>exif_path</strong> (<em>str</em>) – Path to exiftool</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>thumbnail path</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pydngconverter.DNGConverter.resolve_binary">
+<code class="sig-name descname">resolve_binary</code><span class="sig-paren">(</span><em class="sig-param">binary_name</em><span class="sig-paren">)</span><a class="headerlink" href="#pydngconverter.DNGConverter.resolve_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resolves path to binary executable</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>binary_name</strong> (<em>str</em>) – Executable name</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>FileNotFoundError</strong> – Raised when binary is not found</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Path to binary</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>os.Pathlike</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pydngconverter.DNGConverter.resolve_flag">
+<code class="sig-name descname">resolve_flag</code><span class="sig-paren">(</span><em class="sig-param">flag</em>, <em class="sig-param">value</em>, <em class="sig-param">on_true=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pydngconverter.DNGConverter.resolve_flag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resolves boolean or special flags</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>flag</strong> (<em>str</em>) – Flag that DNGConverter takes.</p></li>
+<li><p><strong>value</strong> (<em>any</em>) – Value used to resolve.</p></li>
+<li><p><strong>on_true</strong> (<em>callable</em><em>, </em><em>optional</em>) – Alternative callback on true.
+Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Resolved flag as string.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pydngconverter.CRawCompat">
+<em class="property">class </em><code class="sig-prename descclassname">pydngconverter.</code><code class="sig-name descname">CRawCompat</code><a class="headerlink" href="#pydngconverter.CRawCompat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pydngconverter.main.CliFlag</span></code></p>
+<p>An enumeration.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pydngconverter.DNGVersion">
+<em class="property">class </em><code class="sig-prename descclassname">pydngconverter.</code><code class="sig-name descname">DNGVersion</code><a class="headerlink" href="#pydngconverter.DNGVersion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pydngconverter.main.CliFlag</span></code></p>
+<p>An enumeration.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pydngconverter.JPEGPreview">
+<em class="property">class </em><code class="sig-prename descclassname">pydngconverter.</code><code class="sig-name descname">JPEGPreview</code><a class="headerlink" href="#pydngconverter.JPEGPreview" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pydngconverter.main.CliFlag</span></code></p>
+<p>An enumeration.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pydngconverter.Compression">
+<em class="property">class </em><code class="sig-prename descclassname">pydngconverter.</code><code class="sig-name descname">Compression</code><a class="headerlink" href="#pydngconverter.Compression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pydngconverter.main.CliFlag</span></code></p>
+<p>An enumeration.</p>
+</dd></dl>
+
+</div>
+<span class="target" id="module-pydngconverter.utils"></span><div class="section" id="pydngconverter-utils">
+<h2>pydngconverter.utils<a class="headerlink" href="#pydngconverter-utils" title="Permalink to this headline">¶</a></h2>
+<p>Utility functions for PyDNGConverter</p>
+<dl class="function">
+<dt id="pydngconverter.utils.ensure_existing_dir">
+<code class="sig-prename descclassname">pydngconverter.utils.</code><code class="sig-name descname">ensure_existing_dir</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="headerlink" href="#pydngconverter.utils.ensure_existing_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ensure provided path exists and is a directory</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – path to check</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Pathlike object
+NoneType: If path does not exists or is not a directory</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pathlib.Path</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="pydngconverter.utils.locate_program">
+<code class="sig-prename descclassname">pydngconverter.utils.</code><code class="sig-name descname">locate_program</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="headerlink" href="#pydngconverter.utils.locate_program" title="Permalink to this definition">¶</a></dt>
+<dd><p>Locates program path by name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – Name of executable</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Pathlike Object to Program
+NoneType: If no suitable path is found</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pathlib.Path</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">PyDNGConverter</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Braden Mars.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
