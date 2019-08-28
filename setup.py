@@ -12,7 +12,7 @@ DESCRIPTION = 'Python Interface for Adobe DNG Converter'
 URL = 'https://github.com/BradenM/pydngconverter'
 AUTHOR = 'Braden Mars'
 REQUIRES_PYTHON = '>=3.6.0'
-VERSION = '0.0.0'  # Update via bumpversion
+VERSION = '0.1.0'  # Update via bumpversion
 
 # Required Packages
 REQUIRED = [
