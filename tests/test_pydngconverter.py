@@ -94,10 +94,11 @@ def test_convert(mock_dng, mocker, tmp_path, mock_rglob, mock_subproc):
 
 def test_multi_convert(mock_dng, mocker, tmp_path, mock_rglob, mock_subproc):
     mock_ray = mocker.patch.object(pydng.main, 'ray')
+    mock_ray.wait.return_value = ([], [])
     mock_ray.is_initialized.return_value = False
     dng = pydng.DNGConverter(tmp_path, multiprocess=True)
     mock_ray.init.assert_called_once()
-    dng.convert()
+    list(dng.convert())
     mock_ray.remote.assert_called_with(dng.convert_file)
     # with extract thumbnail
     dng = pydng.DNGConverter(tmp_path, multiprocess=True,

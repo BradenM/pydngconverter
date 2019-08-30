@@ -10,6 +10,7 @@ import subprocess as subproc
 from enum import Enum
 from pathlib import Path
 
+import psutil
 import ray
 from wand.image import Image
 
@@ -127,6 +128,7 @@ class DNGConverter:
         self.multiprocess = multiprocess
 
         if self.multiprocess and not ray.is_initialized():
+            self.cpu_count = psutil.cpu_count(logical=False)
             ray.init(**ray_args)
 
         if self.jpeg_preview == JPEGPreview.EXTRACT:
@@ -212,14 +214,28 @@ class DNGConverter:
         rem_extract_thumb = ray.remote(DNGConverter.extract_thumbnail)
         rem_convert_path = ray.remote(DNGConverter.convert_file)
         raw_files = [str(p) for p in raw_files]
-        img_ids = [ray.put(i) for i in raw_files]
-        thumbs = None
+        thumb_ids = []
         if self.jpeg_preview == JPEGPreview.EXTRACT:
-            thumbs = ray.get([rem_extract_thumb.remote(
-                i, self.dest, self.exif_path) for i in img_ids])
-        converted = ray.get([rem_convert_path.remote(
-            i, self.dest, self.args) for i in img_ids])
-        return (converted, thumbs)
+            thumb_ids = [rem_extract_thumb.remote(
+                i, self.dest, self.exif_path) for i in raw_files]
+        img_ids = [rem_convert_path.remote(
+            i, self.dest, self.args) for i in raw_files]
+        total_tasks = len(thumb_ids) + len(img_ids)
+        all_tasks = img_ids + thumb_ids
+        completed = set()
+        while True:
+            return_count = ((self.cpu_count//2) + len(completed))
+            if return_count > total_tasks:
+                diff = (return_count - total_tasks)
+                return_count = (return_count - diff)
+            ready_ids, remaining_ids = ray.wait(
+                all_tasks, num_returns=return_count)
+            for _i in ready_ids:
+                if _i not in completed:
+                    yield ray.get(_i)
+                completed.add(_i)
+            if len(remaining_ids) == 0:
+                break
 
     def convert(self):
         """Convert all files in source directory"""
