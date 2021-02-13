@@ -1,0 +1,84 @@
+[tool.poetry]
+name = "pydngconverter"
+version = "0.1.0"
+description = "Python Interface for the Adobe's DNG Converter"
+authors = ["Braden Mars <bradenmars@bradenmars.me>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+Logbook = "^1.5.3"
+psutil = "^5.8.0"
+tenacity = "^6.3.1"
+Wand = "^0.6.5"
+trio = "^0.18.0"
+rich = "^9.10.0"
+
+[tool.poetry.dev-dependencies]
+autoflake = "^1.4"
+coveralls = "^3.0.0"
+flake8 = "^3.8.4"
+isort = "^5.7.0"
+black = "^20.8b1"
+pytest = "^6.2.2"
+pytest-coverage = "^0.0"
+pytest-mock = "^3.5.1"
+pytest-asyncio = "^0.14.0"
+Sphinx = "^3.4.3"
+mypy = "^0.800"
+pytest-sugar = "^0.9.4"
+pytest-cov = "^2.11.1"
+
+
+[tool.dephell.main]
+from = { format = "poetry", path = "pyproject.toml" }
+to = { format = "setuppy", path = "setup.py" }
+
+[tool.black]
+line-length = 100
+skip-string-normalization = false
+target-version = ['py38']
+include = '\.pyi?$'
+exclude = '''
+(
+  /(
+      \.eggs         # exclude a few common directories in the
+    | \.git          # root of the project
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | _build
+    | build
+    | dist
+    | pydngconverter/lib
+  )/
+  | foo.py           # also separately exclude a file named foo.py in
+                     # the root of the project
+)
+'''
+
+[tool.isort]
+profile = "black"
+src_paths = ["pydngconverter"]
+line_length = 100
+honor_noqa = true
+length_sort = true
+skip_glob = ["pydngconverter/lib/**/*"]
+
+[tool.pytest.ini_options]
+collect_ignore = ['setup.py']
+testpaths = "tests"
+addopts = "-ra -vv"
+
+[tool.converage.run]
+source = "pydngconverter"
+
+[tool.coverage.report]
+exclude_lines = """
+	if __name__ == .__main__.:
+	"""
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
