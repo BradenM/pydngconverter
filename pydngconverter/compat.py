@@ -5,15 +5,16 @@ Handles platform-specific operations.
 
 """
 
-import platform
-from enum import Enum, auto
-from pathlib import Path
-from typing import Union, List, Tuple
-import os
-from pydngconverter import utils
-from copy import deepcopy
 import asyncio
 import logging
+import os
+import platform
+from copy import deepcopy
+from enum import Enum, auto
+from pathlib import Path
+from typing import Union, List, Tuple, Optional
+
+from pydngconverter import utils
 
 logger = logging.getLogger("pydngconverter").getChild("utils")
 
@@ -97,11 +98,12 @@ async def get_compat_path(path: Union[str, Path]) -> str:
     return str(_path)
 
 
-def resolve_executable(name_variants: List[str]) -> Tuple[Path, str]:
+def resolve_executable(name_variants: List[str], env_override: Optional[str] = None) -> Tuple[Path, str]:
     """Resolve platform-specific path to given executable.
 
     Args:
         name_variants: List of executable names to look for.
+        env_override: Environment variable name to use as override if available.
 
     Returns:
         Path to executable and platform-specific command to execute.
@@ -122,6 +124,14 @@ def resolve_executable(name_variants: List[str]) -> Tuple[Path, str]:
         Platform.WINDOWS: "{}",
         Platform.DARWIN: 'open -a "{}" --args',
     }
+
+    # oh, look at me. fancy walrus operator :)
+    if override_path := os.environ.get(env_override):
+        override_path = Path(override_path.strip())
+        if override_path.exists():
+            logger.info('using binary path override from %s: %s', env_override, override_path)
+            # allow use of env vars to override paths in case of resolution failure.
+            return override_path, app_exec.get(plat, app_ext[Platform.LINUX]).format(str(override_path))
 
     def _resolve(names: List[str]) -> Path:
         for name in names:
