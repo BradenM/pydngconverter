@@ -3,10 +3,12 @@
 """Compat module unit tests."""
 
 import pytest
-from pydngconverter import compat
 from pytest_mock import MockFixture
 
+from pydngconverter import compat
 
+
+@pytest.mark.asyncio
 @pytest.mark.parametrize(
     'platform,in_path,expect_path',
     [
@@ -15,12 +17,12 @@ from pytest_mock import MockFixture
         ('Darwin', '/unix/path', '/unix/path'),
     ]
 )
-def test_get_compat_path(mocker: MockFixture, platform, in_path, expect_path):
+async def test_get_compat_path(mocker: MockFixture, platform, in_path, expect_path):
+    mock_proc = mocker.AsyncMock()
+    mock_proc.return_value.communicate.return_value = expect_path.encode(), ""
     mocker.patch.object(compat.platform, 'system', return_value=platform)
-    mock_proc = mocker.MagicMock()
-    mock_proc.return_value.stdout = expect_path
-    mocker.patch.object(compat.subp, 'run', mock_proc)
-    ret_path = compat.get_compat_path(in_path)
+    mocker.patch.object(compat.asyncio, 'create_subprocess_exec', mock_proc)
+    ret_path = await compat.get_compat_path(in_path)
     assert ret_path == expect_path
     if platform == 'Linux':
         mock_proc.assert_called_once()
