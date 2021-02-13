@@ -73,3 +73,15 @@ def timeit(func):
     return helper
 
 
+def force_async(fn):
+    """execute sync function in 'awaitable' thread"""
+    from concurrent.futures import ThreadPoolExecutor
+    import asyncio
+    pool = ThreadPoolExecutor()
+
+    @functools.wraps(fn)
+    def wrapper(*args, **kwargs):
+        future = pool.submit(fn, *args, **kwargs)
+        return asyncio.wrap_future(future)  # make it awaitable
+
+    return wrapper
