@@ -52,3 +52,53 @@ class DNGParameters:
             yield self.jpeg_preview.flag
 
 
+@dataclass
+class DNGJob:
+    # Job source image.
+    source: Path
+    # Job destination directory.
+    destination_root: Path = None
+    # Job Parent.
+    _parent: 'DNGBatchJob' = field(default=None, repr=False)
+
+    def __post_init__(self):
+        if not self.destination_root:
+            self.destination_root = self.source.parent
+
+    @property
+    def source_suffix(self) -> str:
+        return self.source.suffix
+
+    @property
+    def destination_filename(self) -> str:
+        return self.source.with_suffix('.dng').name
+
+    @property
+    def thumbnail_filename(self) -> str:
+        return self.source.with_suffix('.thumb.jpg').name
+
+    @property
+    def thumbnail_destination(self) -> Path:
+        return self.destination_root / self.thumbnail_filename
+
+    @property
+    def destination(self) -> Path:
+        return self.destination_root / self.destination_filename
+
+
+@dataclass
+class DNGBatchJob:
+    # Source directory.
+    source_directory: Path
+    # Child jobs.
+    jobs: List[DNGJob] = field(default_factory=list)
+    # Destination directory.
+    dest_directory: Optional[Path] = None
+
+    def __post_init__(self):
+        pattern = r".*\.(cr2)"
+        files = [f for f in self.source_directory.rglob('*') if re.match(pattern, f.name, flags=re.IGNORECASE)]
+        self.jobs = [DNGJob(f, destination_root=self.dest_directory, _parent=self) for f in files]
+        return self
+
+
