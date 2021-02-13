@@ -10,9 +10,12 @@ from enum import Enum, auto
 from pathlib import Path
 from typing import Union, List, Tuple
 import os
-import subprocess as subp
 from pydngconverter import utils
 from copy import deepcopy
+import asyncio
+import logging
+
+logger = logging.getLogger("pydngconverter").getChild("utils")
 
 
 class Platform(Enum):
@@ -44,7 +47,7 @@ class Platform(Enum):
         return getattr(cls, str(platform.system()).upper())
 
 
-def _exec_wine(winecmd: str, *args):
+async def _exec_wine(winecmd: str, *args):
     """Execute wine command.
 
     Will check for WINEPREFIX in user env,
@@ -53,21 +56,23 @@ def _exec_wine(winecmd: str, *args):
 
     """
     prefix = os.environ.get("WINEPREFIX", Path.home() / ".dngconverter" / "wine")
+    logger.debug("wine prefix: %s", prefix)
     prefix = Path(prefix)
-    _base_cmd = [winecmd]
-    _base_cmd.extend(args)
     wineenv = dict(**deepcopy(os.environ), **dict(WINEPREFIX=str(prefix)))
-    return subp.run(_base_cmd, env=wineenv, text=True, stdout=subp.PIPE)
+    logger.debug("Executing [italic white]%s %s[/]", winecmd, ' '.join(args))
+    proc = await asyncio.create_subprocess_exec(winecmd, *args, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE, env=wineenv)
+    stdout, _ = await proc.communicate()
+    return stdout
 
 
-def wine_path(unix_path: Path) -> str:
+async def wine_path(unix_path: Path) -> str:
     """Convert *nix path to Windows path."""
-    proc = _exec_wine("winepath", "-w", str(unix_path))
-    _path = proc.stdout.strip()
-    return _path
+    win_path = await _exec_wine("winepath", "-w", str(unix_path))
+    win_path = win_path.decode().rstrip("\n")
+    return win_path
 
 
-def get_compat_path(path: Union[str, Path]) -> str:
+async def get_compat_path(path: Union[str, Path]) -> str:
     """Convert given path to a DNGConverter compatible format.
 
     DNGConverter requires Windows-like paths on *nix environments
@@ -79,12 +84,15 @@ def get_compat_path(path: Union[str, Path]) -> str:
 
     if plat.is_unknown:
         # at least try instead of failing.
+        logger.warning("unable to determine platform! defaulting to linux.")
         return str(_path)
 
     if plat.is_nix:
         # dngconverter runs in wine on *nix,
         # but it requires windows-type paths.
-        return wine_path(_path)
+        _path = await wine_path(_path)
+        logger.debug("converted unix to windows path: %s", _path)
+        return _path
 
     return str(_path)
 
@@ -121,21 +129,22 @@ def resolve_executable(name_variants: List[str]) -> Tuple[Path, str]:
             _app_ext = app_ext.get(plat, app_map[Platform.LINUX]).format(name)
             _app_path = _app_root / _app_ext
             if _app_path.exists():
-                yield _app_path
+                yield name, _app_path
             try:
                 bin_path = utils.locate_program(name)
             except Exception:
                 pass
             else:
                 if bin_path is not None:
-                    yield bin_path
+                    yield name, bin_path
 
     try:
-        exec_path = next(_resolve(name_variants))
+        name, exec_path = next(_resolve(name_variants))
     except StopIteration as e:
         raise RuntimeError(
-            "Could not locate DNG Converter binary! You can manually provide a path with the PYDNG_CONVERTER_PATH env "
+            f"Could not locate {', '.join(name_variants)} binary! You can manually provide a path with the PYDNG_CONVERTER_PATH env "
             "variable. "
         ) from e
     else:
+        logger.info('resolved executable for: %s @ %s', name, exec_path)
         return exec_path, app_exec.get(plat, app_ext[Platform.LINUX]).format(str(exec_path))
