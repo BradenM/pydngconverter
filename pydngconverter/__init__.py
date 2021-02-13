@@ -12,8 +12,7 @@ speed up the process of convering RAW images to DNG.
 __author__ = """Braden Mars"""
 __version__ = '0.1.0'
 
-from pydngconverter.main import (Compression, CRawCompat, DNGConverter,
-                                 DNGVersion, JPEGPreview)
+from pydngconverter.main import DNGConverter, DNGParameters
+from pydngconverter import flags
 
-__all__ = ['DNGConverter', 'CRawCompat',
-           'DNGVersion', 'JPEGPreview', 'Compression']
+__all__ = ['DNGConverter', 'DNGParameters', 'flags']
