@@ -17,7 +17,7 @@ logger = logging.getLogger("pydngconverter").getChild("utils")
 
 
 def locate_program(name):
-    """Locates program path by name
+    """Locates program path by name.
 
     Args:
         name (str): Name of executable
@@ -33,7 +33,7 @@ def locate_program(name):
 
 
 def ensure_existing_dir(path: Union[str, Path]):
-    """Ensure provided path exists and is a directory
+    """Ensure provided path exists and is a directory.
 
     Args:
         path: path to check
@@ -76,7 +76,7 @@ def timeit(func):  # pragma: no cover
 
 
 def force_async(fn):  # pragma: no cover
-    """execute sync function in 'awaitable' thread"""
+    """execute sync function in 'awaitable' thread."""
     from concurrent.futures import ThreadPoolExecutor
     import asyncio
 

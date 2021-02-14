@@ -7,7 +7,6 @@ Provides mappings for Adobe DNG Converter's parameters.
 See Also:
     Command Line Support in the Adobe DNG Converter:
         https://wwwimages2.adobe.com/content/dam/acom/en/products/photoshop/pdfs/dng_commandline.pdf
-
 """
 
 from enum import Enum
@@ -34,7 +33,6 @@ class JPEGPreview(CliFlag):
     extract a thumbnail via the raw image's exif data.
 
     All other options are passed and handled via Adobe DNG Converter.
-
     """
 
     NONE = 0
@@ -64,7 +62,7 @@ class CRawCompat(CliFlag):
 
 
 class DNGVersion(CliFlag):
-    """DNG backwards compatibility version"""
+    """DNG backwards compatibility version."""
 
     ONE_ONE = 1.1
     ONE_THREE = 1.3

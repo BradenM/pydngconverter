@@ -2,7 +2,6 @@
 """PyDNGConverter Compatibility module.
 
 Handles platform-specific operations.
-
 """
 
 import asyncio
@@ -51,10 +50,8 @@ class Platform(Enum):
 async def _exec_wine(winecmd: str, *args):
     """Execute wine command.
 
-    Will check for WINEPREFIX in user env,
-    defaulting to ~/.dngconverter (AUR package default path)
-    if it is not provided.
-
+    Will check for WINEPREFIX in user env, defaulting to ~/.dngconverter
+    (AUR package default path) if it is not provided.
     """
     prefix = os.environ.get("WINEPREFIX", Path.home() / ".dngconverter" / "wine")
     logger.debug("wine prefix: %s", prefix)
@@ -78,9 +75,8 @@ async def wine_path(unix_path: Path) -> str:
 async def get_compat_path(path: Union[str, Path]) -> str:
     """Convert given path to a DNGConverter compatible format.
 
-    DNGConverter requires Windows-like paths on *nix environments
-    that utilize wine.
-
+    DNGConverter requires Windows-like paths on *nix environments that
+    utilize wine.
     """
     _path = Path(path)
     plat = Platform.get()

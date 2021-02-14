@@ -36,7 +36,7 @@ logger = logging.getLogger("pydngconverter")
 
 
 class DNGConverter:
-    """Python Interface to Adobe DNG Converter
+    """Python Interface to Adobe DNG Converter.
 
     Takes the same parameters as the Adobe DNG Converter, but uses
     enums and such to make it easier to use.
@@ -108,7 +108,6 @@ class DNGConverter:
             job: current conversion job.
             image_bytes: image blob data.
             log: logger to use.
-
         """
         log = log or logger
         log.debug("starting write thumbnail: %s", job.thumbnail_filename)
@@ -133,7 +132,6 @@ class DNGConverter:
 
         Returns:
             Path to thumbnail.
-
         """
         log = log or logger
 
@@ -169,7 +167,6 @@ class DNGConverter:
             destination: Output path.
             job: DNG Converter job to run.
             log: Logger to use.
-
         """
         log = log or logger
         log.debug("starting conversion: [b white]%s[/]", job.source.name)
@@ -196,7 +193,6 @@ class DNGConverter:
 
         Args:
             name: friendly name for worker.
-
         """
         worker_log = logger.getChild(name)
         results = []
