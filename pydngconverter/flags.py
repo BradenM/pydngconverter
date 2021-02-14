@@ -6,7 +6,6 @@ from enum import Enum
 
 
 class CliFlag(Enum):
-
     @property
     def name(self):
         return ""

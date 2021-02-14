@@ -15,6 +15,7 @@ from typing import Union
 
 logger = logging.getLogger("pydngconverter").getChild("utils")
 
+
 def locate_program(name):
     """Locates program path by name
 
@@ -49,34 +50,36 @@ def ensure_existing_dir(path: Union[str, Path]):
     return path
 
 
-def timeit(func): # pragma: no cover
+def timeit(func):  # pragma: no cover
     """Async variant of timeit."""
+
     async def process(func, *args, **params):
         if asyncio.iscoroutinefunction(func):
-            logger.debug('this function is a coroutine: {}'.format(func.__name__))
+            logger.debug("this function is a coroutine: {}".format(func.__name__))
             return await func(*args, **params)
         else:
-            logger.debug('this is not a coroutine')
+            logger.debug("this is not a coroutine")
             return func(*args, **params)
 
     async def helper(*args, **params):
-        logger.info('{}.time'.format(func.__name__))
+        logger.info("{}.time".format(func.__name__))
         start = time.time()
         result = await process(func, *args, **params)
 
         # Test normal function route...
         # result = await process(lambda *a, **p: print(*a, **p), *args, **params)
 
-        logger.info('>>> %s', time.time() - start)
+        logger.info(">>> %s", time.time() - start)
         return result
 
     return helper
 
 
-def force_async(fn): # pragma: no cover
+def force_async(fn):  # pragma: no cover
     """execute sync function in 'awaitable' thread"""
     from concurrent.futures import ThreadPoolExecutor
     import asyncio
+
     pool = ThreadPoolExecutor()
 
     @functools.wraps(fn)
