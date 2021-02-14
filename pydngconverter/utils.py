@@ -49,7 +49,7 @@ def ensure_existing_dir(path: Union[str, Path]):
     return path
 
 
-def timeit(func):
+def timeit(func): # pragma: no cover
     """Async variant of timeit."""
     async def process(func, *args, **params):
         if asyncio.iscoroutinefunction(func):
@@ -73,7 +73,7 @@ def timeit(func):
     return helper
 
 
-def force_async(fn):
+def force_async(fn): # pragma: no cover
     """execute sync function in 'awaitable' thread"""
     from concurrent.futures import ThreadPoolExecutor
     import asyncio
