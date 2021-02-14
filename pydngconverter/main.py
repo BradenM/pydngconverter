@@ -42,6 +42,10 @@ class DNGConverter:
     Keyword Args:
         dest: Path to destination.
             Defaults to source directory.
+        max_workers: Set maximum number of workers.
+            Defaults to CPU core count.
+        debug: Enable debug logs and benchmarking.
+            Defaults to false.
         **params: DNG Converter parameters.
 
     Raises:
@@ -51,10 +55,16 @@ class DNGConverter:
     """
 
     def __init__(
-        self, source: Union[str, Path], dest: Optional[PathLike] = None, debug=False, **params: DNGParameters
+        self,
+        source: Union[str, Path],
+        dest: Optional[PathLike] = None,
+        max_workers=None,
+        debug=False,
+        **params: DNGParameters,
     ):
         if debug:
             logger.setLevel(logging.DEBUG)
+            logging.getLogger("asyncio").setLevel(logging.WARNING)
             # enable benchmarking.
             self.convert = utils.timeit(self.convert)
         self.parameters = DNGParameters(**params)
@@ -68,9 +78,11 @@ class DNGConverter:
         if not self.source:
             raise NotADirectoryError(f"{source} does not exists or is not a directory!")
         self.source = self.source.absolute()
-        self.job = dngconverter.DNGBatchJob(source_directory=self.source, dest_directory=Path(dest) if dest else None)
-        self.chunk_size = psutil.cpu_count()
-        self._queue = asyncio.Queue()
+        self.job = dngconverter.DNGBatchJob(
+            source_directory=self.source, dest_directory=Path(dest) if dest else None
+        )
+        self.max_workers = max_workers or psutil.cpu_count()
+        self._queue = asyncio.Queue(loop=self._loop)
 
     @property
     def will_extract(self) -> bool:
