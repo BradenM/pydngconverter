@@ -60,7 +60,7 @@ class DNGConverter:
         dest: Optional[PathLike] = None,
         max_workers=None,
         debug=False,
-        **params: DNGParameters,
+        **params
     ):
         if debug:
             logger.setLevel(logging.DEBUG)
