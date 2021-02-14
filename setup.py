@@ -61,7 +61,16 @@ setup(
             "pytest-coverage==0.*,>=0.0.0",
             "pytest-mock==3.*,>=3.5.1",
             "pytest-sugar==0.*,>=0.9.4",
+            "recommonmark==0.*,>=0.7.1",
             "sphinx==3.*,>=3.4.3",
-        ]
+            "sphinx-autodoc-typehints==1.*,>=1.11.1",
+            "sphinx-rtd-theme==0.*,>=0.5.1",
+        ],
+        "docs": [
+            "recommonmark==0.*,>=0.7.1",
+            "sphinx==3.*,>=3.4.3",
+            "sphinx-autodoc-typehints==1.*,>=1.11.1",
+            "sphinx-rtd-theme==0.*,>=0.5.1",
+        ],
     },
 )
