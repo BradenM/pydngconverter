@@ -68,7 +68,7 @@ class DNGConverter:
         if not self.source:
             raise NotADirectoryError(f"{source} does not exists or is not a directory!")
         self.source = self.source.absolute()
-        self.job = dngconverter.DNGBatchJob(source_directory=self.source, dest_directory=Path(dest))
+        self.job = dngconverter.DNGBatchJob(source_directory=self.source, dest_directory=Path(dest) if dest else None)
         self.chunk_size = psutil.cpu_count()
         self._queue = asyncio.Queue()
 
