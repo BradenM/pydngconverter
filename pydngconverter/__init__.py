@@ -5,8 +5,8 @@ PyDngConverter
 ====================================
 A Python Interface to Adobe's DNG Converter.
 
-Uses multiprocessing and Image manipulation to significantly
-speed up the process of convering RAW images to DNG.
+Uses parallel processing and Image manipulation to significantly
+speed up the process of converting RAW images to DNG.
 """
 
 __author__ = """Braden Mars"""

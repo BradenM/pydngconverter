@@ -1,11 +1,9 @@
 # PyDNGConverter
 
-Python Interface for the Adobe's DNG Converter
+Python Interface for the Adobe's DNG Converter.
 
-> This project is very early on in development. It currently only supports .CR2 files.
->
-> More documentation will come soon.
-
+Utilizing parallel processing,
+PyDNGConverter can convert RAW images to DNG up to **~60% faster** than simply utilizing Adobe's DNG Converter.
 
 ## Installation
 
