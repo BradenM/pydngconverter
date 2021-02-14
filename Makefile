@@ -54,3 +54,7 @@ dist: clean ## builds package
 
 install: clean ## install pkg
 	python setup.py install
+
+docs: clean ## generate docs
+	$(MAKE) -C docsrc clean
+	$(MAKE) -C docsrc github
