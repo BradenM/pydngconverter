@@ -60,8 +60,10 @@ async def _exec_wine(winecmd: str, *args):
     logger.debug("wine prefix: %s", prefix)
     prefix = Path(prefix)
     wineenv = dict(**deepcopy(os.environ), **dict(WINEPREFIX=str(prefix)))
-    logger.debug("Executing [italic white]%s %s[/]", winecmd, ' '.join(args))
-    proc = await asyncio.create_subprocess_exec(winecmd, *args, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE, env=wineenv)
+    logger.debug("Executing [italic white]%s %s[/]", winecmd, " ".join(args))
+    proc = await asyncio.create_subprocess_exec(
+        winecmd, *args, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE, env=wineenv
+    )
     stdout, _ = await proc.communicate()
     return stdout
 
@@ -98,7 +100,9 @@ async def get_compat_path(path: Union[str, Path]) -> str:
     return str(_path)
 
 
-def resolve_executable(name_variants: List[str], env_override: Optional[str] = None) -> Tuple[Path, str]:
+def resolve_executable(
+    name_variants: List[str], env_override: Optional[str] = None
+) -> Tuple[Path, str]:
     """Resolve platform-specific path to given executable.
 
     Args:
@@ -129,9 +133,11 @@ def resolve_executable(name_variants: List[str], env_override: Optional[str] = N
     if override_path := os.environ.get(env_override):
         override_path = Path(override_path.strip())
         if override_path.exists():
-            logger.info('using binary path override from %s: %s', env_override, override_path)
+            logger.info("using binary path override from %s: %s", env_override, override_path)
             # allow use of env vars to override paths in case of resolution failure.
-            return override_path, app_exec.get(plat, app_ext[Platform.LINUX]).format(str(override_path))
+            return override_path, app_exec.get(plat, app_ext[Platform.LINUX]).format(
+                str(override_path)
+            )
 
     def _resolve(names: List[str]) -> Path:
         for name in names:
@@ -156,5 +162,5 @@ def resolve_executable(name_variants: List[str], env_override: Optional[str] = N
             "variable. "
         ) from e
     else:
-        logger.info('resolved executable for: %s @ %s', name, exec_path)
+        logger.info("resolved executable for: %s @ %s", name, exec_path)
         return exec_path, app_exec.get(plat, app_ext[Platform.LINUX]).format(str(exec_path))

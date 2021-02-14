@@ -30,12 +30,12 @@ class DNGParameters:
     @property
     def fast_load_flag(self) -> Optional[str]:
         if self.fast_load:
-            return '-fl'
+            return "-fl"
 
     @property
     def linear_flag(self) -> Optional[str]:
         if self.fast_load:
-            return '-l'
+            return "-l"
 
     @property
     def iter_args(self) -> Iterator[str]:
@@ -59,7 +59,7 @@ class DNGJob:
     # Job destination directory.
     destination_root: Path = None
     # Job Parent.
-    _parent: 'DNGBatchJob' = field(default=None, repr=False)
+    _parent: "DNGBatchJob" = field(default=None, repr=False)
 
     def __post_init__(self):
         if not self.destination_root:
@@ -71,11 +71,11 @@ class DNGJob:
 
     @property
     def destination_filename(self) -> str:
-        return self.source.with_suffix('.dng').name
+        return self.source.with_suffix(".dng").name
 
     @property
     def thumbnail_filename(self) -> str:
-        return self.source.with_suffix('.thumb.jpg').name
+        return self.source.with_suffix(".thumb.jpg").name
 
     @property
     def thumbnail_destination(self) -> Path:
@@ -97,8 +97,10 @@ class DNGBatchJob:
 
     def __post_init__(self):
         pattern = r".*\.(cr2)"
-        files = [f for f in self.source_directory.rglob('*') if re.match(pattern, f.name, flags=re.IGNORECASE)]
+        files = [
+            f
+            for f in self.source_directory.rglob("*")
+            if re.match(pattern, f.name, flags=re.IGNORECASE)
+        ]
         self.jobs = [DNGJob(f, destination_root=self.dest_directory, _parent=self) for f in files]
         return self
-
-
