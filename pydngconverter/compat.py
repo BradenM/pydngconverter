@@ -142,7 +142,7 @@ def resolve_executable(
     def _resolve(names: List[str]) -> Path:
         for name in names:
             _app_root = app_map.get(plat, app_map[Platform.LINUX])
-            _app_ext = app_ext.get(plat, app_map[Platform.LINUX]).format(name)
+            _app_ext = app_ext.get(plat, app_ext[Platform.LINUX]).format(name)
             _app_path = _app_root / _app_ext
             if _app_path.exists():
                 yield name, _app_path
