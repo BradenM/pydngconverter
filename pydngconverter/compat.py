@@ -123,11 +123,6 @@ def resolve_executable(
         Platform.WINDOWS: "{name}.exe",
         Platform.DARWIN: "{name}.app/Contents/MacOS/{name}",
     }
-    app_exec = {
-        Platform.LINUX: "{name}",
-        Platform.WINDOWS: "{name}",
-        Platform.DARWIN: 'open -a "{name}" --args',
-    }
 
     # oh, look at me. fancy walrus operator :)
     if override_path := os.environ.get(env_override):
@@ -135,9 +130,7 @@ def resolve_executable(
         if override_path.exists():
             logger.info("using binary path override from %s: %s", env_override, override_path)
             # allow use of env vars to override paths in case of resolution failure.
-            return override_path, app_exec.get(plat, app_ext[Platform.LINUX]).format(
-                str(override_path)
-            )
+            return override_path
 
     def _resolve(names: List[str]) -> Path:
         for name in names:
@@ -163,4 +156,4 @@ def resolve_executable(
         ) from e
     else:
         logger.info("resolved executable for: %s @ %s", name, exec_path)
-        return exec_path, app_exec.get(plat, app_ext[Platform.LINUX]).format(name=str(exec_path))
+        return exec_path

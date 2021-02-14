@@ -60,7 +60,7 @@ class DNGConverter:
         dest: Optional[PathLike] = None,
         max_workers=None,
         debug=False,
-        **params
+        **params,
     ):
         if debug:
             logger.setLevel(logging.DEBUG)
@@ -68,13 +68,11 @@ class DNGConverter:
             # enable benchmarking.
             self.convert = utils.timeit(self.convert)
         self.parameters = DNGParameters(**params)
-        self.bin_path, self.bin_exec = compat.resolve_executable(
+        self.bin_exec = compat.resolve_executable(
             ["Adobe DNG Converter", "dngconverter"], "PYDNG_DNG_CONVERTER"
         )
         if self.parameters.jpeg_preview == JPEGPreview.EXTRACT:
-            self.exif_path, self.exif_exec = compat.resolve_executable(
-                ["exiftool"], "PYDNG_EXIF_TOOL"
-            )
+            self.exif_exec = compat.resolve_executable(["exiftool"], "PYDNG_EXIF_TOOL")
         self.source: Path = Path(source)
         self.source = utils.ensure_existing_dir(self.source)
         if not self.source:
@@ -169,7 +167,7 @@ class DNGConverter:
         source_path = await compat.get_compat_path(job.source)
         log.debug("determined source path: [b white]%s[/]", source_path)
         dng_args = [*self.parameters.iter_args, "-d", destination, str(source_path)]
-        log.debug("using converter args: %s", ",".join(dng_args))
+        log.debug("using converter args: %s %s", self.bin_exec, " ".join(dng_args))
         log.info(
             "[b white]converting:[/] [bold grey58]%s => %s[/]",
             job.source.name,
