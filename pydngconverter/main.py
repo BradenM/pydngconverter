@@ -14,12 +14,17 @@ from typing import Optional, Union
 
 import psutil
 from rich.logging import RichHandler
-from wand.image import Image
 import itertools
 
 from pydngconverter import utils, compat, dngconverter
 from pydngconverter.dngconverter import DNGParameters
 from pydngconverter.flags import JPEGPreview
+
+try:
+    from wand.image import Image
+except ImportError as e:
+    Image = e
+
 
 logging.basicConfig(
     level=logging.INFO,
@@ -73,6 +78,10 @@ class DNGConverter:
         )
         if self.parameters.jpeg_preview == JPEGPreview.EXTRACT:
             self.exif_exec = compat.resolve_executable(["exiftool"], "PYDNG_EXIF_TOOL")
+            if isinstance(Image, ImportError):
+                raise RuntimeError(
+                    "Cannot use JPEG Preview EXTRACT because wand failed to import!"
+                ) from Image
         self.source: Path = Path(source)
         self.source = utils.ensure_existing_dir(self.source)
         if not self.source:
