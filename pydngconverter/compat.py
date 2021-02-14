@@ -152,7 +152,7 @@ def resolve_executable(name_variants: List[str], env_override: Optional[str] = N
         name, exec_path = next(_resolve(name_variants))
     except StopIteration as e:
         raise RuntimeError(
-            f"Could not locate {', '.join(name_variants)} binary! You can manually provide a path with the PYDNG_CONVERTER_PATH env "
+            f"Could not locate {', '.join(name_variants)} binary! You can manually provide a path with the {env_override} env "
             "variable. "
         ) from e
     else:
