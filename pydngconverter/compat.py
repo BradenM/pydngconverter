@@ -12,7 +12,7 @@ import platform
 from copy import deepcopy
 from enum import Enum, auto
 from pathlib import Path
-from typing import Union, List, Tuple, Optional
+from typing import Union, List, Optional
 
 from pydngconverter import utils
 
