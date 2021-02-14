@@ -16,17 +16,21 @@ pip install -U pydngconverter
 ## Example
 
 ```python
-from pydngconverter import DNGConverter, JPEGPreview
+import asyncio
+from pydngconverter import DNGConverter, flags
 
-# Create Instance
-pydng = DNGConverter('/my/raw/files/',
-                    dest='/dngfiles',
-                    jpeg_preview=JPEGPreview.FULL,
-                    fast_load=True,
-                    multiprocess=True
-                    )
+async def main():
+    # Create converter instance.
+    pydng = DNGConverter('/my/raw/files/',
+                        dest='/dngfiles',
+                        jpeg_preview=flags.JPEGPreview.EXTRACT,
+                        fast_load=True,
+                        )
+    # Convert all
+    return await pydng.convert()
 
-# Convert all raw images
-pydng.convert()
+loop = asyncio.get_event_loop()
+loop.run_until_complete(main())
+loop.close()
 
 ```
