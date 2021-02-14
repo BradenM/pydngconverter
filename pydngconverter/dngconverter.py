@@ -109,11 +109,6 @@ class DNGBatchJob:
     dest_directory: Optional[Path] = None
 
     def __post_init__(self):
-        pattern = r".*\.(cr2)"
-        files = [
-            f
-            for f in self.source_directory.rglob("*")
-            if re.match(pattern, f.name, flags=re.IGNORECASE)
-        ]
+        files = [f for f in self.source_directory.rglob("*") if f.is_file()]
         self.jobs = [DNGJob(f, destination_root=self.dest_directory, _parent=self) for f in files]
         return self
