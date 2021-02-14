@@ -125,7 +125,7 @@ def resolve_executable(
     }
 
     # oh, look at me. fancy walrus operator :)
-    if override_path := os.environ.get(env_override):
+    if env_override and (override_path := os.environ.get(env_override)):
         override_path = Path(override_path.strip())
         if override_path.exists():
             logger.info("using binary path override from %s: %s", env_override, override_path)
