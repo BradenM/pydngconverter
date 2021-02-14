@@ -57,3 +57,14 @@ class DNGVersion(CliFlag):
 class Compression(CliFlag):
     NO = "u"
     YES = "c"
+
+
+class LossyCompression(CliFlag):
+    NO = ""
+    YES = "-lossy"
+
+    @property
+    def flag(self):
+        if self == Compression.YES:
+            return "-lossy"
+        return ""

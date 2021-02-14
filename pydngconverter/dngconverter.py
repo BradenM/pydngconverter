@@ -7,15 +7,15 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import List, Optional, Iterator
 
-from pydngconverter.flags import DNGVersion, CRawCompat, Compression, JPEGPreview
+from pydngconverter.flags import DNGVersion, CRawCompat, Compression, JPEGPreview, LossyCompression
 
 
 @dataclass
 class DNGParameters:
     """Adobe DNG Converter Parameters."""
 
-    # Enable lossy DNG Compression.
-    compression: Compression = Compression.NO
+    # Enable DNG Compression.
+    compression: Compression = Compression.YES
     # Camera RAW Compatible Version.
     camera_raw: CRawCompat = CRawCompat.latest()
     # DNG Version.
@@ -24,6 +24,12 @@ class DNGParameters:
     jpeg_preview: JPEGPreview = JPEGPreview.MEDIUM
     # Embed fast load data.
     fast_load: bool = False
+    # Enable lossy compression.
+    lossy: LossyCompression = LossyCompression.NO
+    # Long-side pixels (from 32-65000). Implied lossy compression.
+    side: Optional[int] = 0
+    # Megapixels limit of >= 1024 (1MP)
+    count: Optional[int] = 0
     # Linear DNG.
     linear: bool = False
 
@@ -46,6 +52,13 @@ class DNGParameters:
             yield self.fast_load_flag
         if self.linear_flag:
             yield self.linear_flag
+        if not self.lossy and (self.side or self.count):
+            # implied lossy if side or count provided.
+            yield self.lossy.flag
+        if self.side:
+            yield f"-side {self.side}"
+        if self.count:
+            yield f"-count {self.count}"
         if self.jpeg_preview == JPEGPreview.EXTRACT:
             yield JPEGPreview.NONE.flag
         else:
