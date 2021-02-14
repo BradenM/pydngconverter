@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
 
-"""
-pydngconverter.utils
-====================================
-Utility functions for PyDNGConverter
-"""
+"""Utility functions for PyDNGConverter."""
+
 import asyncio
 import functools
 import logging

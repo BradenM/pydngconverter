@@ -26,9 +26,9 @@ class DNGParameters:
     fast_load: bool = False
     # Enable lossy compression.
     lossy: LossyCompression = LossyCompression.NO
-    # Long-side pixels (from 32-65000). Implied lossy compression.
+    # Long-side pixels (from 32-65000). Implies lossy compression.
     side: Optional[int] = 0
-    # Megapixels limit of >= 1024 (1MP)
+    # Megapixels limit of >= 1024 (1MP). Implies lossy compression.
     count: Optional[int] = 0
     # Linear DNG.
     linear: bool = False

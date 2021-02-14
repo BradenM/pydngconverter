@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""
-pydngconverter.main
-====================================
-PyDNGConverter Code Module
-"""
+"""PyDNGConverter main module."""
 
 import asyncio
 import logging
@@ -18,7 +14,7 @@ import itertools
 
 from pydngconverter import utils, compat, dngconverter
 from pydngconverter.dngconverter import DNGParameters
-from pydngconverter.flags import JPEGPreview
+from pydngconverter import flags
 
 try:
     from wand.image import Image
@@ -51,10 +47,25 @@ class DNGConverter:
             Defaults to CPU core count.
         debug: Enable debug logs and benchmarking.
             Defaults to false.
-        **params: DNG Converter parameters.
+        compression (flags.DNGVersion): Enable DNG compression.
+            Defaults to true.
+        camera_raw (flags.CRawCompat): Camera RAW compatibility version.
+            Defaults to latest.
+        dng_version (flags.DNGVersion): DNG backwards compatible version.
+            Defaults to latest.
+        jpeg_preview (flags.JPEGPreview): JPEG preview thumbnail quality/method.
+            Defaults to medium quality.
+        fast_load (bool): Embed fast load data.
+            Defaults to false.
+        lossy (flags.LossyCompression): Enable lossy compression.
+            Defaults to `flags.LossyCompression.NO`.
+        side (int): Long-side pixels (32-65000). Implies lossy compression.
+        count (int): Megapixels limit of >= 1024 (1MP). Implies lossy compression.
+        linear (bool): Enable linear DNG format.
+            Defaults to false.
 
     Raises:
-        FileNotFoundError: DNG Converter cannot be found.
+        FileNotFoundError: Executable program cannot be found.
         NotADirectoryError: Source directory does not exist
              or is not a directory.
     """
@@ -76,7 +87,7 @@ class DNGConverter:
         self.bin_exec = compat.resolve_executable(
             ["Adobe DNG Converter", "dngconverter"], "PYDNG_DNG_CONVERTER"
         )
-        if self.parameters.jpeg_preview == JPEGPreview.EXTRACT:
+        if self.will_extract:
             self.exif_exec = compat.resolve_executable(["exiftool"], "PYDNG_EXIF_TOOL")
             if isinstance(Image, ImportError):
                 raise RuntimeError(
@@ -97,7 +108,7 @@ class DNGConverter:
     @property
     def will_extract(self) -> bool:
         """Whether to create thumbnail extraction jobs or not."""
-        return self.parameters.jpeg_preview == JPEGPreview.EXTRACT
+        return self.parameters.jpeg_preview == flags.JPEGPreview.EXTRACT
 
     async def _write_thumbnail(
         self, *, job: dngconverter.DNGJob = None, image_bytes=None, log=None, **kwargs
@@ -125,6 +136,8 @@ class DNGConverter:
         self, *, job: dngconverter.DNGJob = None, log=None, **kwargs
     ) -> Path:
         """Extract jpeg thumbnail from exif data.
+
+        Required `exiftool` to be installed.
 
         Args:
             job: DNG Converter job.
