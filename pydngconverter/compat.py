@@ -119,14 +119,14 @@ def resolve_executable(
         Platform.DARWIN: Path("/Applications"),
     }
     app_ext = {
-        Platform.LINUX: "{}",
-        Platform.WINDOWS: "{}.exe",
-        Platform.DARWIN: "{}.app/Contents/MacOS/{}",
+        Platform.LINUX: "{name}",
+        Platform.WINDOWS: "{name}.exe",
+        Platform.DARWIN: "{name}.app/Contents/MacOS/{name}",
     }
     app_exec = {
-        Platform.LINUX: "{}",
-        Platform.WINDOWS: "{}",
-        Platform.DARWIN: 'open -a "{}" --args',
+        Platform.LINUX: "{name}",
+        Platform.WINDOWS: "{name}",
+        Platform.DARWIN: 'open -a "{name}" --args',
     }
 
     # oh, look at me. fancy walrus operator :)
@@ -142,7 +142,7 @@ def resolve_executable(
     def _resolve(names: List[str]) -> Path:
         for name in names:
             _app_root = app_map.get(plat, app_map[Platform.LINUX])
-            _app_ext = app_ext.get(plat, app_ext[Platform.LINUX]).format(name)
+            _app_ext = app_ext.get(plat, app_ext[Platform.LINUX]).format(name=name)
             _app_path = _app_root / _app_ext
             if _app_path.exists():
                 yield name, _app_path
@@ -163,4 +163,4 @@ def resolve_executable(
         ) from e
     else:
         logger.info("resolved executable for: %s @ %s", name, exec_path)
-        return exec_path, app_exec.get(plat, app_ext[Platform.LINUX]).format(str(exec_path))
+        return exec_path, app_exec.get(plat, app_ext[Platform.LINUX]).format(name=str(exec_path))
