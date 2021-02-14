@@ -102,7 +102,7 @@ async def get_compat_path(path: Union[str, Path]) -> str:
 
 def resolve_executable(
     name_variants: List[str], env_override: Optional[str] = None
-) -> Tuple[Path, str]:
+) -> str:
     """Resolve platform-specific path to given executable.
 
     Args:
