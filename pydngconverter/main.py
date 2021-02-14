@@ -15,6 +15,7 @@ from typing import Optional, Union
 import psutil
 from rich.logging import RichHandler
 from wand.image import Image
+import itertools
 
 from pydngconverter import utils, compat, dngconverter
 from pydngconverter.dngconverter import DNGParameters
@@ -27,7 +28,6 @@ logging.basicConfig(
     handlers=[RichHandler(markup=True)],
 )
 logger = logging.getLogger("pydngconverter")
-logging.getLogger("asyncio").setLevel(logging.WARNING)
 
 
 class DNGConverter:
@@ -72,7 +72,9 @@ class DNGConverter:
             ["Adobe DNG Converter", "dngconverter"], "PYDNG_DNG_CONVERTER"
         )
         if self.parameters.jpeg_preview == JPEGPreview.EXTRACT:
-            self.exif_path, self.exif_exec = compat.resolve_executable(["exiftool"], "PYDNG_EXIF_TOOL")
+            self.exif_path, self.exif_exec = compat.resolve_executable(
+                ["exiftool"], "PYDNG_EXIF_TOOL"
+            )
         self.source: Path = Path(source)
         self.source = utils.ensure_existing_dir(self.source)
         if not self.source:
@@ -82,6 +84,7 @@ class DNGConverter:
             source_directory=self.source, dest_directory=Path(dest) if dest else None
         )
         self.max_workers = max_workers or psutil.cpu_count()
+        self._loop = asyncio.get_event_loop()
         self._queue = asyncio.Queue(loop=self._loop)
 
     @property
@@ -127,7 +130,11 @@ class DNGConverter:
         """
         log = log or logger
 
-        log.info("[bold white]extracting raw thumbnail:[/] [bold grey58]%s => %s[/]", job.source.name, job.thumbnail_filename)
+        log.info(
+            "[bold white]extracting raw thumbnail:[/] [bold grey58]%s => %s[/]",
+            job.source.name,
+            job.thumbnail_filename,
+        )
         exif_args = ["-b", "-previewImage", str(job.source)]
         exif_proc = await asyncio.create_subprocess_exec(
             self.exif_exec,
@@ -163,12 +170,19 @@ class DNGConverter:
         log.debug("determined source path: [b white]%s[/]", source_path)
         dng_args = [*self.parameters.iter_args, "-d", destination, str(source_path)]
         log.debug("using converter args: %s", ",".join(dng_args))
-        log.info("[b white]converting:[/] [bold grey58]%s => %s[/]", job.source.name, job.destination_filename)
+        log.info(
+            "[b white]converting:[/] [bold grey58]%s => %s[/]",
+            job.source.name,
+            job.destination_filename,
+        )
         proc = await asyncio.create_subprocess_exec(
             self.bin_exec, *dng_args, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
         )
         await proc.wait()
-        log.info("[bold bright_green]finished conversion:[/][bold white] %s[/]", job.destination_filename)
+        log.info(
+            "[bold bright_green]finished conversion:[/][bold white] %s[/]", job.destination_filename
+        )
+        return job.destination
 
     async def create_worker(self, name: str):
         """Create job execution worker.
@@ -178,18 +192,26 @@ class DNGConverter:
 
         """
         worker_log = logger.getChild(name)
+        results = []
         while True:
-            worker_log.debug("worker awaiting job (qsize: %s)...", self._queue.qsize())
-            item = await self._queue.get()
-            job, action, kwargs = item
-            worker_log.debug("received job: %s (%s)", job, action)
-            await action(job=job, **kwargs, log=worker_log)
-            worker_log.debug("worker finished job!")
-            self._queue.task_done()
+            try:
+                worker_log.debug("worker awaiting job (qsize: %s)...", self._queue.qsize())
+                item = await self._queue.get()
+                job, action, kwargs = item
+                worker_log.debug("received job: %s (%s)", job, action)
+                _result = await action(job=job, **kwargs, log=worker_log)
+                results.append(_result) if _result else None
+                worker_log.debug("worker finished job!")
+                self._queue.task_done()
+            except asyncio.CancelledError:
+                worker_log.info("terminating...")
+                break
+        return results
 
     async def convert(self):
         """Recursively convert all files in source directory."""
         destination = await compat.get_compat_path(self.job.jobs[0].destination.parent)
+        # queue up jobs.
         for job in self.job.jobs:
             logger.debug("queueing job: %s", job.source.name)
             self._queue.put_nowait((job, self.convert_file, dict(destination=destination)))
@@ -197,16 +219,26 @@ class DNGConverter:
                 self._queue.put_nowait((job, self.extract_thumbnail, dict()))
 
         tasks = []
-        num_workers = self.chunk_size
-        logger.debug("creating %s workers!", num_workers)
-
-        for i in range(num_workers + 1):
+        logger.debug("creating %s workers!", self.max_workers)
+        # create n workers to execute jobs.
+        for i in range(self.max_workers):
             task = asyncio.create_task(self.create_worker(f"worker{i}"))
             tasks.append(task)
 
+        # wait for all jobs to be completed.
         await self._queue.join()
-        logger.debug("queue(s) empty! canceling workers...")
+
+        logger.debug("queue empty! terminating workers...")
         for task in tasks:
             task.cancel()
 
-        await asyncio.gather(*tasks, return_exceptions=True)
+        # wait until everything is cleaned up.
+        _results = await asyncio.gather(*tasks, return_exceptions=True)
+
+        results = list(itertools.chain.from_iterable(_results))
+        logger.debug("Job completed. Results: %s", results)
+        logger.info(
+            "[bold bright_green]Job completed.[/][bold white] %s files were generated.[/]",
+            len(results),
+        )
+        return results
