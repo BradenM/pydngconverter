@@ -10,10 +10,15 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-import os
 import sys
+import sphinx_rtd_theme
+from pathlib import Path
 
-sys.path.insert(0, os.path.abspath(".."))
+DOC_ROOT = Path(__file__).parent
+PROJ_ROOT = DOC_ROOT.parent
+
+sys.path.insert(0, str(PROJ_ROOT.absolute()))
+print(str(PROJ_ROOT.absolute()))
 
 # -- Project information -----------------------------------------------------
 
@@ -38,8 +43,15 @@ extensions = [
     "sphinx.ext.napoleon",
     "sphinx.ext.githubpages",
     "sphinx_autodoc_typehints",
+    "sphinx.ext.autosummary",
+    "sphinx.ext.autosectionlabel",
     "sphinx_rtd_theme",
 ]
+
+# Auto-doc/summary config
+autodoc_default_options = {"members": True, "undoc-members": True, "show-inheritance": True}
+autosummary_generate = True
+autosectionlabel_prefix_document = True
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
@@ -49,13 +61,13 @@ templates_path = ["_templates"]
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
-
 # -- Options for HTML output -------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
 html_theme = "sphinx_rtd_theme"
+html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,

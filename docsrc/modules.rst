@@ -2,11 +2,12 @@ API Reference
 =============
 
 .. autosummary::
-   :toctree: _autosummary
+    :toctree: _autosummary
 
-   pydngconverter
-   pydngconverter.main
-   pydngconverter.flags
-   pydngconverter.compat
-   pydngconverter.dngconverter
-   pydngconverter.utils
+    pydngconverter
+    pydngconverter.main
+    pydngconverter.dngconverter
+    pydngconverter.flags
+    pydngconverter.compat
+    pydngconverter.utils
+
