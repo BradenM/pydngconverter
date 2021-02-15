@@ -46,7 +46,7 @@ setup(
     packages=["pydngconverter"],
     package_dir={"": "."},
     package_data={},
-    install_requires=["psutil==5.*,>=5.8.0", "rich==9.*,>=9.10.0", "wand==0.*,>=0.6.5"],
+    install_requires=["psutil==5.8.*,>=5.8.0", "rich==9.10.*,>=9.10.0", "wand==0.6.*,>=0.6.0"],
     extras_require={
         "dev": [
             "autoflake==1.*,>=1.4.0",

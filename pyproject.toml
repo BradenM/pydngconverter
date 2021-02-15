@@ -28,9 +28,9 @@ include = [
 
 [tool.poetry.dependencies]
 python = "^3.8"
-psutil = "^5.8.0"
-Wand = "^0.6.5"
-rich = "^9.10.0"
+psutil = "~5.8"
+Wand = "~0.6"
+rich = "~9.10"
 
 [tool.poetry.dev-dependencies]
 autoflake = "^1.4"
