@@ -1,0 +1,527 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>pydngconverter &mdash; PyDNGConverter 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pydngconverter.main" href="pydngconverter.main.html" />
+    <link rel="prev" title="API Reference" href="../modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> PyDNGConverter
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../modules.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">pydngconverter</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">PyDngConverter</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pydngconverter.main.html">pydngconverter.main</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pydngconverter.dngconverter.html">pydngconverter.dngconverter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pydngconverter.flags.html">pydngconverter.flags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pydngconverter.compat.html">pydngconverter.compat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pydngconverter.utils.html">pydngconverter.utils</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PyDNGConverter</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../modules.html">API Reference</a> &raquo;</li>
+        
+      <li>pydngconverter</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/_autosummary/pydngconverter.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-pydngconverter">
+<span id="pydngconverter"></span><h1>pydngconverter<a class="headerlink" href="#module-pydngconverter" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2>PyDngConverter<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>A Python Interface to Adobe’s DNG Converter.</p>
+<p>Uses parallel processing and Image manipulation to significantly
+speed up the process of converting RAW images to DNG.</p>
+<dl class="py class">
+<dt id="pydngconverter.DNGConverter">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pydngconverter.</span></code><code class="sig-name descname"><span class="pre">DNGConverter</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_workers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pydngconverter.DNGConverter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Python Interface to Adobe DNG Converter.</p>
+<p>Takes the same parameters as the Adobe DNG Converter, but uses
+enums and such to make it easier to use.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>source</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code>]) – Path to source directory containing raw files</p>
+</dd>
+<dt class="field-even">Keyword Arguments</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>dest</strong> – Path to destination.
+Defaults to source directory.</p></li>
+<li><p><strong>max_workers</strong> – Set maximum number of workers.
+Defaults to CPU core count.</p></li>
+<li><p><strong>debug</strong> – Enable debug logs and benchmarking.
+Defaults to false.</p></li>
+<li><p><strong>compression</strong> (<a class="reference internal" href="pydngconverter.flags.html#pydngconverter.flags.DNGVersion" title="pydngconverter.flags.DNGVersion"><em>flags.DNGVersion</em></a>) – Enable DNG compression.
+Defaults to true.</p></li>
+<li><p><strong>camera_raw</strong> (<a class="reference internal" href="pydngconverter.flags.html#pydngconverter.flags.CRawCompat" title="pydngconverter.flags.CRawCompat"><em>flags.CRawCompat</em></a>) – Camera RAW compatibility version.
+Defaults to latest.</p></li>
+<li><p><strong>dng_version</strong> (<a class="reference internal" href="pydngconverter.flags.html#pydngconverter.flags.DNGVersion" title="pydngconverter.flags.DNGVersion"><em>flags.DNGVersion</em></a>) – DNG backwards compatible version.
+Defaults to latest.</p></li>
+<li><p><strong>jpeg_preview</strong> (<a class="reference internal" href="pydngconverter.flags.html#pydngconverter.flags.JPEGPreview" title="pydngconverter.flags.JPEGPreview"><em>flags.JPEGPreview</em></a>) – JPEG preview thumbnail quality/method.
+Defaults to medium quality.</p></li>
+<li><p><strong>fast_load</strong> (<em>bool</em>) – Embed fast load data.
+Defaults to false.</p></li>
+<li><p><strong>lossy</strong> (<a class="reference internal" href="pydngconverter.flags.html#pydngconverter.flags.LossyCompression" title="pydngconverter.flags.LossyCompression"><em>flags.LossyCompression</em></a>) – Enable lossy compression.
+Defaults to <cite>flags.LossyCompression.NO</cite>.</p></li>
+<li><p><strong>side</strong> (<em>int</em>) – Long-side pixels (32-65000). Implies lossy compression.</p></li>
+<li><p><strong>count</strong> (<em>int</em>) – Megapixels limit of &gt;= 1024 (1MP). Implies lossy compression.</p></li>
+<li><p><strong>linear</strong> (<em>bool</em>) – Enable linear DNG format.
+Defaults to false.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>FileNotFoundError</strong> – Executable program cannot be found.</p></li>
+<li><p><strong>NotADirectoryError</strong> – Source directory does not exist
+    or is not a directory.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="pydngconverter.DNGConverter.convert">
+<em class="property"><span class="pre">async</span> </em><code class="sig-name descname"><span class="pre">convert</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pydngconverter.DNGConverter.convert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Recursively convert all files in source directory.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pydngconverter.DNGConverter.convert_file">
+<em class="property"><span class="pre">async</span> </em><code class="sig-name descname"><span class="pre">convert_file</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destination</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">job</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pydngconverter.DNGConverter.convert_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute provided conversion job.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>destination</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – Output path.</p></li>
+<li><p><strong>job</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference internal" href="pydngconverter.dngconverter.html#pydngconverter.dngconverter.DNGJob" title="pydngconverter.dngconverter.DNGJob"><code class="xref py py-class docutils literal notranslate"><span class="pre">DNGJob</span></code></a>]) – DNG Converter job to run.</p></li>
+<li><p><strong>log</strong> – Logger to use.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pydngconverter.DNGConverter.create_worker">
+<em class="property"><span class="pre">async</span> </em><code class="sig-name descname"><span class="pre">create_worker</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pydngconverter.DNGConverter.create_worker" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create job execution worker.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – friendly name for worker.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pydngconverter.DNGConverter.extract_thumbnail">
+<em class="property"><span class="pre">async</span> </em><code class="sig-name descname"><span class="pre">extract_thumbnail</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">job</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pydngconverter.DNGConverter.extract_thumbnail" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract jpeg thumbnail from exif data.</p>
+<p>Required <cite>exiftool</cite> to be installed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>job</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference internal" href="pydngconverter.dngconverter.html#pydngconverter.dngconverter.DNGJob" title="pydngconverter.dngconverter.DNGJob"><code class="xref py py-class docutils literal notranslate"><span class="pre">DNGJob</span></code></a>]) – DNG Converter job.</p></li>
+<li><p><strong>log</strong> – Logger to use.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Path to thumbnail.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pydngconverter.DNGConverter.will_extract">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">will_extract</span></code><a class="headerlink" href="#pydngconverter.DNGConverter.will_extract" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether to create thumbnail extraction jobs or not.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="pydngconverter.DNGParameters">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pydngconverter.</span></code><code class="sig-name descname"><span class="pre">DNGParameters</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">compression=&lt;Compression.YES:</span> <span class="pre">'c'&gt;</span></em>, <em class="sig-param"><span class="pre">camera_raw=&lt;CRawCompat.ELEVEN_TWO:</span> <span class="pre">11.2&gt;</span></em>, <em class="sig-param"><span class="pre">dng_version=&lt;DNGVersion.ONE_FOUR:</span> <span class="pre">1.4&gt;</span></em>, <em class="sig-param"><span class="pre">jpeg_preview=&lt;JPEGPreview.MEDIUM:</span> <span class="pre">1&gt;</span></em>, <em class="sig-param"><span class="pre">fast_load=False</span></em>, <em class="sig-param"><span class="pre">lossy=&lt;LossyCompression.NO:</span> <span class="pre">''&gt;</span></em>, <em class="sig-param"><span class="pre">side=0</span></em>, <em class="sig-param"><span class="pre">count=0</span></em>, <em class="sig-param"><span class="pre">linear=False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pydngconverter.DNGParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Adobe DNG Converter Parameters.</p>
+<dl class="py attribute">
+<dt id="pydngconverter.DNGParameters.compression">
+<code class="sig-name descname"><span class="pre">compression</span></code><a class="headerlink" href="#pydngconverter.DNGParameters.compression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable DNG compression.
+Defaults to true.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="pydngconverter.flags.html#pydngconverter.flags.DNGVersion" title="pydngconverter.flags.DNGVersion">flags.DNGVersion</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pydngconverter.DNGParameters.camera_raw">
+<code class="sig-name descname"><span class="pre">camera_raw</span></code><a class="headerlink" href="#pydngconverter.DNGParameters.camera_raw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Camera RAW compatibility version.
+Defaults to latest.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="pydngconverter.flags.html#pydngconverter.flags.CRawCompat" title="pydngconverter.flags.CRawCompat">flags.CRawCompat</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pydngconverter.DNGParameters.dng_version">
+<code class="sig-name descname"><span class="pre">dng_version</span></code><a class="headerlink" href="#pydngconverter.DNGParameters.dng_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>DNG backwards compatible version.
+Defaults to latest.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="pydngconverter.flags.html#pydngconverter.flags.DNGVersion" title="pydngconverter.flags.DNGVersion">flags.DNGVersion</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pydngconverter.DNGParameters.jpeg_preview">
+<code class="sig-name descname"><span class="pre">jpeg_preview</span></code><a class="headerlink" href="#pydngconverter.DNGParameters.jpeg_preview" title="Permalink to this definition">¶</a></dt>
+<dd><p>JPEG preview thumbnail quality/method.
+Defaults to medium quality.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="pydngconverter.flags.html#pydngconverter.flags.JPEGPreview" title="pydngconverter.flags.JPEGPreview">flags.JPEGPreview</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pydngconverter.DNGParameters.fast_load">
+<code class="sig-name descname"><span class="pre">fast_load</span></code><a class="headerlink" href="#pydngconverter.DNGParameters.fast_load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Embed fast load data.
+Defaults to false.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pydngconverter.DNGParameters.lossy">
+<code class="sig-name descname"><span class="pre">lossy</span></code><a class="headerlink" href="#pydngconverter.DNGParameters.lossy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable lossy compression.
+Defaults to <cite>flags.LossyCompression.NO</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="pydngconverter.flags.html#pydngconverter.flags.LossyCompression" title="pydngconverter.flags.LossyCompression">flags.LossyCompression</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pydngconverter.DNGParameters.side">
+<code class="sig-name descname"><span class="pre">side</span></code><a class="headerlink" href="#pydngconverter.DNGParameters.side" title="Permalink to this definition">¶</a></dt>
+<dd><p>Long-side pixels (32-65000). Implies lossy compression.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pydngconverter.DNGParameters.count">
+<code class="sig-name descname"><span class="pre">count</span></code><a class="headerlink" href="#pydngconverter.DNGParameters.count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Megapixels limit of &gt;= 1024 (1MP). Implies lossy compression.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pydngconverter.DNGParameters.linear">
+<code class="sig-name descname"><span class="pre">linear</span></code><a class="headerlink" href="#pydngconverter.DNGParameters.linear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable linear DNG format.
+Defaults to false.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="id0">
+<code class="sig-name descname"><span class="pre">camera_raw</span></code><em class="property"><span class="pre">:</span> <a class="reference internal" href="pydngconverter.flags.html#pydngconverter.flags.CRawCompat" title="pydngconverter.flags.CRawCompat"><span class="pre">pydngconverter.flags.CRawCompat</span></a></em><em class="property"> <span class="pre">=</span> <span class="pre">11.2</span></em><a class="headerlink" href="#id0" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="id2">
+<code class="sig-name descname"><span class="pre">compression</span></code><em class="property"><span class="pre">:</span> <a class="reference internal" href="pydngconverter.flags.html#pydngconverter.flags.Compression" title="pydngconverter.flags.Compression"><span class="pre">pydngconverter.flags.Compression</span></a></em><em class="property"> <span class="pre">=</span> <span class="pre">'c'</span></em><a class="headerlink" href="#id2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="id3">
+<code class="sig-name descname"><span class="pre">count</span></code><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">0</span></em><a class="headerlink" href="#id3" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="id4">
+<code class="sig-name descname"><span class="pre">dng_version</span></code><em class="property"><span class="pre">:</span> <a class="reference internal" href="pydngconverter.flags.html#pydngconverter.flags.DNGVersion" title="pydngconverter.flags.DNGVersion"><span class="pre">pydngconverter.flags.DNGVersion</span></a></em><em class="property"> <span class="pre">=</span> <span class="pre">1.4</span></em><a class="headerlink" href="#id4" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="id5">
+<code class="sig-name descname"><span class="pre">fast_load</span></code><em class="property"><span class="pre">:</span> <span class="pre">bool</span></em><em class="property"> <span class="pre">=</span> <span class="pre">False</span></em><a class="headerlink" href="#id5" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pydngconverter.DNGParameters.fast_load_flag">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">fast_load_flag</span></code><a class="headerlink" href="#pydngconverter.DNGParameters.fast_load_flag" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pydngconverter.DNGParameters.iter_args">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">iter_args</span></code><a class="headerlink" href="#pydngconverter.DNGParameters.iter_args" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterator</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="id6">
+<code class="sig-name descname"><span class="pre">jpeg_preview</span></code><em class="property"><span class="pre">:</span> <a class="reference internal" href="pydngconverter.flags.html#pydngconverter.flags.JPEGPreview" title="pydngconverter.flags.JPEGPreview"><span class="pre">pydngconverter.flags.JPEGPreview</span></a></em><em class="property"> <span class="pre">=</span> <span class="pre">1</span></em><a class="headerlink" href="#id6" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="id7">
+<code class="sig-name descname"><span class="pre">linear</span></code><em class="property"><span class="pre">:</span> <span class="pre">bool</span></em><em class="property"> <span class="pre">=</span> <span class="pre">False</span></em><a class="headerlink" href="#id7" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pydngconverter.DNGParameters.linear_flag">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">linear_flag</span></code><a class="headerlink" href="#pydngconverter.DNGParameters.linear_flag" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="id8">
+<code class="sig-name descname"><span class="pre">lossy</span></code><em class="property"><span class="pre">:</span> <a class="reference internal" href="pydngconverter.flags.html#pydngconverter.flags.LossyCompression" title="pydngconverter.flags.LossyCompression"><span class="pre">pydngconverter.flags.LossyCompression</span></a></em><em class="property"> <span class="pre">=</span> <span class="pre">''</span></em><a class="headerlink" href="#id8" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="id9">
+<code class="sig-name descname"><span class="pre">side</span></code><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">0</span></em><a class="headerlink" href="#id9" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="pydngconverter.main.html" class="btn btn-neutral float-right" title="pydngconverter.main" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../modules.html" class="btn btn-neutral float-left" title="API Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Braden Mars.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

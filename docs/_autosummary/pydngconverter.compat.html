@@ -1,0 +1,382 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>pydngconverter.compat &mdash; PyDNGConverter 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pydngconverter.utils" href="pydngconverter.utils.html" />
+    <link rel="prev" title="pydngconverter.flags" href="pydngconverter.flags.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> PyDNGConverter
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../modules.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="pydngconverter.html">pydngconverter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pydngconverter.main.html">pydngconverter.main</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pydngconverter.dngconverter.html">pydngconverter.dngconverter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pydngconverter.flags.html">pydngconverter.flags</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">pydngconverter.compat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pydngconverter.utils.html">pydngconverter.utils</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PyDNGConverter</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../modules.html">API Reference</a> &raquo;</li>
+        
+      <li>pydngconverter.compat</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/_autosummary/pydngconverter.compat.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-pydngconverter.compat">
+<span id="pydngconverter-compat"></span><h1>pydngconverter.compat<a class="headerlink" href="#module-pydngconverter.compat" title="Permalink to this headline">¶</a></h1>
+<p>PyDNGConverter Compatibility module.</p>
+<p>Handles platform-specific operations.</p>
+<p class="rubric">Functions</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pydngconverter.compat.get_compat_path" title="pydngconverter.compat.get_compat_path"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_compat_path</span></code></a>(path)</p></td>
+<td><p>Convert given path to a DNGConverter compatible format.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pydngconverter.compat.resolve_executable" title="pydngconverter.compat.resolve_executable"><code class="xref py py-obj docutils literal notranslate"><span class="pre">resolve_executable</span></code></a>(name_variants[, env_override])</p></td>
+<td><p>Resolve platform-specific path to given executable.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pydngconverter.compat.wine_path" title="pydngconverter.compat.wine_path"><code class="xref py py-obj docutils literal notranslate"><span class="pre">wine_path</span></code></a>(unix_path)</p></td>
+<td><p>Convert <a href="#id1"><span class="problematic" id="id2">*</span></a>nix path to Windows path.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Classes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pydngconverter.compat.Platform" title="pydngconverter.compat.Platform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Platform</span></code></a>(value)</p></td>
+<td><p>An enumeration.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt id="pydngconverter.compat.Platform">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pydngconverter.compat.</span></code><code class="sig-name descname"><span class="pre">Platform</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pydngconverter.compat.Platform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>An enumeration.</p>
+<dl class="py attribute">
+<dt id="pydngconverter.compat.Platform.DARWIN">
+<code class="sig-name descname"><span class="pre">DARWIN</span></code><em class="property"> <span class="pre">=</span> <span class="pre">6</span></em><a class="headerlink" href="#pydngconverter.compat.Platform.DARWIN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="pydngconverter.compat.Platform.LINUX">
+<code class="sig-name descname"><span class="pre">LINUX</span></code><em class="property"> <span class="pre">=</span> <span class="pre">4</span></em><a class="headerlink" href="#pydngconverter.compat.Platform.LINUX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="pydngconverter.compat.Platform.SOLARIS">
+<code class="sig-name descname"><span class="pre">SOLARIS</span></code><em class="property"> <span class="pre">=</span> <span class="pre">3</span></em><a class="headerlink" href="#pydngconverter.compat.Platform.SOLARIS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="pydngconverter.compat.Platform.UNIX">
+<code class="sig-name descname"><span class="pre">UNIX</span></code><em class="property"> <span class="pre">=</span> <span class="pre">2</span></em><a class="headerlink" href="#pydngconverter.compat.Platform.UNIX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="pydngconverter.compat.Platform.UNKNOWN">
+<code class="sig-name descname"><span class="pre">UNKNOWN</span></code><em class="property"> <span class="pre">=</span> <span class="pre">1</span></em><a class="headerlink" href="#pydngconverter.compat.Platform.UNKNOWN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="pydngconverter.compat.Platform.WINDOWS">
+<code class="sig-name descname"><span class="pre">WINDOWS</span></code><em class="property"> <span class="pre">=</span> <span class="pre">5</span></em><a class="headerlink" href="#pydngconverter.compat.Platform.WINDOWS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pydngconverter.compat.Platform.get">
+<em class="property"><span class="pre">classmethod</span> </em><code class="sig-name descname"><span class="pre">get</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pydngconverter.compat.Platform.get" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#pydngconverter.compat.Platform" title="pydngconverter.compat.Platform"><code class="xref py py-class docutils literal notranslate"><span class="pre">Platform</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pydngconverter.compat.Platform.is_darwin">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">is_darwin</span></code><a class="headerlink" href="#pydngconverter.compat.Platform.is_darwin" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pydngconverter.compat.Platform.is_nix">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">is_nix</span></code><a class="headerlink" href="#pydngconverter.compat.Platform.is_nix" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pydngconverter.compat.Platform.is_unknown">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">is_unknown</span></code><a class="headerlink" href="#pydngconverter.compat.Platform.is_unknown" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pydngconverter.compat.Platform.is_win">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">is_win</span></code><a class="headerlink" href="#pydngconverter.compat.Platform.is_win" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="pydngconverter.compat.get_compat_path">
+<em class="property"><span class="pre">async</span> </em><code class="sig-prename descclassname"><span class="pre">pydngconverter.compat.</span></code><code class="sig-name descname"><span class="pre">get_compat_path</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pydngconverter.compat.get_compat_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert given path to a DNGConverter compatible format.</p>
+<p>DNGConverter requires Windows-like paths on <a href="#id3"><span class="problematic" id="id4">*</span></a>nix environments that
+utilize wine.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pydngconverter.compat.resolve_executable">
+<code class="sig-prename descclassname"><span class="pre">pydngconverter.compat.</span></code><code class="sig-name descname"><span class="pre">resolve_executable</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_variants</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env_override</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pydngconverter.compat.resolve_executable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resolve platform-specific path to given executable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name_variants</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – List of executable names to look for.</p></li>
+<li><p><strong>env_override</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – Environment variable name to use as override if available.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Path to executable and platform-specific command to execute.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="pydngconverter.compat.wine_path">
+<em class="property"><span class="pre">async</span> </em><code class="sig-prename descclassname"><span class="pre">pydngconverter.compat.</span></code><code class="sig-name descname"><span class="pre">wine_path</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">unix_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pydngconverter.compat.wine_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert <a href="#id5"><span class="problematic" id="id6">*</span></a>nix path to Windows path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="pydngconverter.utils.html" class="btn btn-neutral float-right" title="pydngconverter.utils" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="pydngconverter.flags.html" class="btn btn-neutral float-left" title="pydngconverter.flags" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Braden Mars.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
