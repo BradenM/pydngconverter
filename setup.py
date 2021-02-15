@@ -25,7 +25,7 @@ setup(
     name="pydngconverter",
     version="0.1.0",
     description="Python Interface for the Adobe's DNG Converter",
-    python_requires="==3.*,>=3.7.0",
+    python_requires="==3.*,>=3.8.0",
     project_urls={
         "documentation": "https://bradenm.github.io/pydngconverter",
         "homepage": "https://github.com/BradenM/pydngconverter",
@@ -51,6 +51,7 @@ setup(
         "dev": [
             "autoflake==1.*,>=1.4.0",
             "black==20.*,>=20.8.0.b1",
+            "bump2version==1.*,>=1.0.1",
             "coveralls==3.*,>=3.0.0",
             "flake8==3.*,>=3.8.4",
             "isort==5.*,>=5.7.0",
@@ -63,12 +64,14 @@ setup(
             "pytest-sugar==0.*,>=0.9.4",
             "recommonmark==0.*,>=0.7.1",
             "sphinx==3.*,>=3.4.3",
+            "sphinx-autoapi==1.5.*,>=1.5.1",
             "sphinx-autodoc-typehints==1.*,>=1.11.1",
             "sphinx-rtd-theme==0.*,>=0.5.1",
         ],
         "docs": [
             "recommonmark==0.*,>=0.7.1",
             "sphinx==3.*,>=3.4.3",
+            "sphinx-autoapi==1.5.*,>=1.5.1",
             "sphinx-autodoc-typehints==1.*,>=1.11.1",
             "sphinx-rtd-theme==0.*,>=0.5.1",
         ],

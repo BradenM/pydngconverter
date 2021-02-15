@@ -2,7 +2,6 @@
 
 """PyDNGConverter interface bridges for Adobe DNG Converter."""
 
-import re
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import List, Optional, Iterator
@@ -12,25 +11,35 @@ from pydngconverter.flags import DNGVersion, CRawCompat, Compression, JPEGPrevie
 
 @dataclass
 class DNGParameters:
-    """Adobe DNG Converter Parameters."""
+    """Adobe DNG Converter Parameters.
 
-    # Enable DNG Compression.
+    Attributes:
+        compression (flags.DNGVersion): Enable DNG compression.
+            Defaults to true.
+        camera_raw (flags.CRawCompat): Camera RAW compatibility version.
+            Defaults to latest.
+        dng_version (flags.DNGVersion): DNG backwards compatible version.
+            Defaults to latest.
+        jpeg_preview (flags.JPEGPreview): JPEG preview thumbnail quality/method.
+            Defaults to medium quality.
+        fast_load (bool): Embed fast load data.
+            Defaults to false.
+        lossy (flags.LossyCompression): Enable lossy compression.
+            Defaults to `flags.LossyCompression.NO`.
+        side (int): Long-side pixels (32-65000). Implies lossy compression.
+        count (int): Megapixels limit of >= 1024 (1MP). Implies lossy compression.
+        linear (bool): Enable linear DNG format.
+            Defaults to false.
+    """
+
     compression: Compression = Compression.YES
-    # Camera RAW Compatible Version.
     camera_raw: CRawCompat = CRawCompat.latest()
-    # DNG Version.
     dng_version: DNGVersion = DNGVersion.latest()
-    # JPEG thumbnail preview quality.
     jpeg_preview: JPEGPreview = JPEGPreview.MEDIUM
-    # Embed fast load data.
     fast_load: bool = False
-    # Enable lossy compression.
     lossy: LossyCompression = LossyCompression.NO
-    # Long-side pixels (from 32-65000). Implies lossy compression.
     side: Optional[int] = 0
-    # Megapixels limit of >= 1024 (1MP). Implies lossy compression.
     count: Optional[int] = 0
-    # Linear DNG.
     linear: bool = False
 
     @property
@@ -67,11 +76,18 @@ class DNGParameters:
 
 @dataclass
 class DNGJob:
-    # Job source image.
+    """DNG Conversion job.
+
+    Attributes:
+        source: Job source image path.
+        destination_root: Job destination directory.
+            Defaults to source path root.
+        _parent: Parent Job.
+            Defaults to None.
+    """
+
     source: Path
-    # Job destination directory.
     destination_root: Path = None
-    # Job Parent.
     _parent: "DNGBatchJob" = field(default=None, repr=False)
 
     def __post_init__(self):
@@ -101,11 +117,18 @@ class DNGJob:
 
 @dataclass
 class DNGBatchJob:
-    # Source directory.
+    """Batch DNG Conversion.
+
+    Attributes:
+        source_directory: Directory of source images.
+        jobs: Child jobs of this batch job.
+            Automatically populated based on source directory.
+        dest_directory: Destination directory.
+            Defaults to source directory root.
+    """
+
     source_directory: Path
-    # Child jobs.
     jobs: List[DNGJob] = field(default_factory=list)
-    # Destination directory.
     dest_directory: Optional[Path] = None
 
     def __post_init__(self):
