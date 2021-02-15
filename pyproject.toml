@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pydngconverter"
-version = "0.1.0"
+version = "0.2.0"
 description = "Python Interface for the Adobe's DNG Converter"
 authors = ["Braden Mars <bradenmars@bradenmars.me>"]
 license = "MIT"

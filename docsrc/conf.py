@@ -29,7 +29,7 @@ author = "Braden Mars"
 github_doc_root = "https://github.com/BradenM/pydngconverter/tree/master/docs/"
 
 # The full version, including alpha/beta/rc tags
-release = "0.1.0"
+release = "0.2.0"
 
 
 # -- General configuration ---------------------------------------------------
