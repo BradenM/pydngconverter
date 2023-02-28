@@ -63,9 +63,11 @@ class DNGParameters:
             # implied lossy if side or count provided.
             yield self.lossy.flag
         if self.side:
-            yield f"-side {self.side}"
+            yield "-side"
+            yield f"{self.side}"
         if self.count:
-            yield f"-count {self.count}"
+            yield "-count"
+            yield f"{self.count}"
         if self.jpeg_preview == JPEGPreview.EXTRACT:
             yield JPEGPreview.NONE.flag
         else:
