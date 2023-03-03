@@ -8,6 +8,7 @@ PyDNGConverter can convert RAW images to DNG up to **~60% faster** than simply u
 ## Installation
 
 ```sh
+sudo apt-get install gcc python3-dev
 pip install -U pydngconverter
 ```
 
