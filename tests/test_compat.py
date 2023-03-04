@@ -1,7 +1,6 @@
 """Compat module unit tests."""
 
 import os
-import sys
 from pathlib import Path
 
 import pytest
