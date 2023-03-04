@@ -53,6 +53,9 @@ class CRawCompat(CliFlag):
     SIX_SIX = 6.6
     SEVEN_ONE = 7.1
     ELEVEN_TWO = 11.2
+    TWELVE_FOUR = 12.4
+    THIRTEEN_TWO = 13.2
+    FOURTEEN = 14.0
 
     @property
     def name(self):
@@ -65,6 +68,7 @@ class DNGVersion(CliFlag):
     ONE_ONE = 1.1
     ONE_THREE = 1.3
     ONE_FOUR = 1.4
+    ONE_SIX = 1.6
 
     @property
     def name(self):
