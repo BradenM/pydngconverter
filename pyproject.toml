@@ -34,9 +34,7 @@ Wand = "~0.6"
 rich = "~9.10"
 
 [tool.poetry.group.dev.dependencies]
-autoflake = "^1.4"
 coveralls = "^3.0.0"
-flake8 = "^3.8.4"
 isort = "^5.7.0"
 black = "^23.1.0"
 pytest = "^6.2.2"
@@ -48,6 +46,7 @@ pytest-sugar = "^0.9.4"
 pytest-cov = "^2.11.1"
 bump2version = "^1.0.1"
 pre-commit = "^3.1.1"
+ruff = "^0.0.254"
 
 
 [tool.poetry.group.docs]
