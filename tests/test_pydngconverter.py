@@ -1,11 +1,15 @@
 """PyDNGConverter tests."""
+from __future__ import annotations
+
 from pathlib import Path
 
 import pytest
 from pytest_mock import MockFixture
+from typing_extensions import NamedTuple
 
 import pydngconverter as pydng
 from pydngconverter import flags
+from pydngconverter.dngconverter import DNGParameters
 
 ARG_SCENARIOS = [
     # no thumbnail.
@@ -47,3 +51,73 @@ def test_init_setup(with_scenarios, mocker: MockFixture):
     if dng.parameters.jpeg_preview == flags.JPEGPreview.EXTRACT:
         mock_resolve.assert_has_calls([dng_call, exif_call])
         assert mock_resolve.call_count == 2
+
+
+default_args = ["-c", "-cr11.2", "-dng1.4", "-p1"]
+
+
+class DNGParamCase(NamedTuple):
+    params: DNGParameters
+    expect_args: list[str]
+
+
+ParameterCases = [
+    DNGParamCase(DNGParameters(), default_args),
+    # no compression
+    DNGParamCase(
+        params=DNGParameters(
+            compression=flags.Compression.NO,
+        ),
+        expect_args=["-u", *default_args[1:]],
+    ),
+    # fastload
+    DNGParamCase(
+        params=DNGParameters(fast_load=True),
+        expect_args=[*default_args[:-1], "-fl", "-p1"],
+    ),
+    # linear dng
+    DNGParamCase(
+        params=DNGParameters(linear=True),
+        expect_args=[*default_args[:-1], "-l", "-p1"],
+    ),
+    # implied lossy side only
+    DNGParamCase(
+        params=DNGParameters(side=1),
+        expect_args=[*default_args[:-1], "-side", "1", "-p1"],
+    ),
+    # implied lossy count only
+    DNGParamCase(
+        params=DNGParameters(count=1),
+        expect_args=[*default_args[:-1], "-count", "1", "-p1"],
+    ),
+    # implied lossy side/count
+    DNGParamCase(
+        params=DNGParameters(side=1, count=1),
+        expect_args=[*default_args[:-1], "-side", "1", "-count", "1", "-p1"],
+    ),
+    # explicit lossy side/count
+    DNGParamCase(
+        params=DNGParameters(side=1, count=1, lossy=flags.LossyCompression.NO),
+        expect_args=[*default_args[:-1], "-side", "1", "-count", "1", "-p1"],
+    ),
+    # dng converter jpeg
+    DNGParamCase(
+        params=DNGParameters(jpeg_preview=flags.JPEGPreview.FULL),
+        expect_args=[*default_args[:-1], "-p2"],
+    ),
+    # none jpeg
+    DNGParamCase(
+        params=DNGParameters(jpeg_preview=flags.JPEGPreview.NONE),
+        expect_args=[*default_args[:-1], "-p0"],
+    ),
+    # pydngconverter exif extract jpeg
+    DNGParamCase(
+        params=DNGParameters(jpeg_preview=flags.JPEGPreview.NONE),
+        expect_args=[*default_args[:-1], "-p0"],
+    ),
+]
+
+
+@pytest.mark.parametrize("case", ParameterCases)
+def test_dng_parameters_args(case: DNGParamCase):
+    assert list(case.params.iter_args) == case.expect_args
