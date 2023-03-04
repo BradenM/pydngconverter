@@ -25,6 +25,9 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: "poetry"
 
+      - name: Install Dependencies
+        run: poetry install -vv
+
       - name: Build
         run: poetry build
 
