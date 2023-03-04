@@ -11,9 +11,14 @@
 - **chlog:** add changelog generation workflow.
 - **main:** add missed install step.
 - **main:** update main test workflow.
+- **publish:** add deps install step.
+- **publish:** add publish release workflow.
+- **release:** add release-please flow
+- **release:** add release-please manifest
 - **renovate:** update renovate config.
 
 ### Features
+- **deps:** remove bump2version dev-dep
 - **deps:** update rich/typing-extensions
 - **deps:** add pre-commit dev dep.
 - **dx:** add ruff config.
