@@ -1,14 +1,12 @@
-# -*- coding: utf-8 -*-
-
 """Utility functions for PyDNGConverter."""
 
-import asyncio
-import functools
-import logging
-import shutil
 import time
-from pathlib import Path
+import shutil
+import asyncio
+import logging
+import functools
 from typing import Union
+from pathlib import Path
 
 logger = logging.getLogger("pydngconverter").getChild("utils")
 
@@ -74,8 +72,8 @@ def timeit(func):  # pragma: no cover
 
 def force_async(fn):  # pragma: no cover
     """execute sync function in 'awaitable' thread."""
-    from concurrent.futures import ThreadPoolExecutor
     import asyncio
+    from concurrent.futures import ThreadPoolExecutor
 
     pool = ThreadPoolExecutor()
 

@@ -11,8 +11,9 @@
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
 import sys
-import sphinx_rtd_theme
 from pathlib import Path
+
+import sphinx_rtd_theme
 
 DOC_ROOT = Path(__file__).parent
 PROJ_ROOT = DOC_ROOT.parent

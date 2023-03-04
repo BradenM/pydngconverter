@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
 PyDngConverter
 ====================================
@@ -12,7 +10,7 @@ speed up the process of converting RAW images to DNG.
 __author__ = """Braden Mars"""
 __version__ = "0.2.0"
 
-from pydngconverter.main import DNGConverter, DNGParameters
 from pydngconverter import flags
+from pydngconverter.main import DNGConverter, DNGParameters
 
 __all__ = ["DNGConverter", "DNGParameters", "flags"]

@@ -1,13 +1,11 @@
-# -*- coding: utf-8 -*-
-
 """PyDNGConverter tests."""
 from pathlib import Path
 
+import pytest
 from pytest_mock import MockFixture
 
 import pydngconverter as pydng
 from pydngconverter import flags
-import pytest
 
 ARG_SCENARIOS = [
     # no thumbnail.

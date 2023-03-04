@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """PyDNGConverter test config."""
 
 import pytest
