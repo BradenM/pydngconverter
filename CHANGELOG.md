@@ -46,14 +46,14 @@
 - **deps:** remove no longer used deps, update packaging info
 - **dng:** add support for lossy compression param
 - **flags:** refactor all flag enums to flags module
-- **pkg:** update setup file
-- **pkg:** move docs deps to extras
-- **pkg:** migrate to poetry, update pkgs
 - **pkg:** set correct min python requirements, update lockfile, update bump config
 - **pkg:** add bump2version dev dep, enable signed tags
+- **pkg:** migrate to poetry, update pkgs
+- **pkg:** move docs deps to extras
+- **pkg:** update setup file
+- **pydng:** collect and return results from convert, cleanup codestyle
 - **pydng:** rewrite DNGConverter to be async and execute conversions in parallel
 - **pydng:** add max_workers arg
-- **pydng:** collect and return results from convert, cleanup codestyle
 - **util:** add util for executing sync func in thread
 - **util:** add async compat timeit util
 
