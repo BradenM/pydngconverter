@@ -15,6 +15,7 @@
 - **publish:** add publish release workflow.
 - **release:** add release-please flow
 - **release:** add release-please manifest
+- **release:** fix actions repo
 - **renovate:** update renovate config.
 
 ### Features
