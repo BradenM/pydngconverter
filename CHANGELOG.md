@@ -1,4 +1,29 @@
 <a name="unreleased"></a>
+## 0.1.0 (2023-03-04)
+
+
+### Features
+
+* **deps:** Add pre-commit dev dep. ([28df1d0](https://github.com/BradenM/pydngconverter/commit/28df1d098b63d2736d41ed16c5125e88aaa41e5b))
+* **deps:** Remove bump2version dev-dep ([7893ac8](https://github.com/BradenM/pydngconverter/commit/7893ac8ec482601f6fed2f48b25d915a3f495b42))
+* **deps:** Update rich/typing-extensions ([e288076](https://github.com/BradenM/pydngconverter/commit/e288076e8a4c04eed428bf7b388dd07e7c7130b9))
+* **dx:** Add ruff config. ([effa2e3](https://github.com/BradenM/pydngconverter/commit/effa2e33742e8c77597d5370eb3cb1b9f94d701c))
+* **pkg:** Update troves, update includes. ([df27d47](https://github.com/BradenM/pydngconverter/commit/df27d4709cb9d247c2b9594f99b336c90bea914f))
+* **pkg:** Use dependency group for docs deps ([33cff8c](https://github.com/BradenM/pydngconverter/commit/33cff8c2cfad592210620abf41a24ee731b2a2a6))
+
+
+### Bug Fixes
+
+* **deps:** Update black/mypy versions ([012a61b](https://github.com/BradenM/pydngconverter/commit/012a61b603087a20bb85ad2e1219c9f6f9d30e92))
+* **dng:** Linear flag should depend on linear option, not fast load. ([c1470e6](https://github.com/BradenM/pydngconverter/commit/c1470e6e9580a115450838dbfe2d499eba3f9910))
+* **main:** Remove sub py3.9 asyncio queue loop parameter. ([03ce54d](https://github.com/BradenM/pydngconverter/commit/03ce54d6dc5f79450467e4faa1e6fa4627c13c54))
+* **pkg:** Dep version constraints ([fb8e9e7](https://github.com/BradenM/pydngconverter/commit/fb8e9e72c5bf1c1e9fe471278395b485bfe475bc))
+
+
+### Documentation
+
+* **chglog:** Generate changelog. ([4b7abdf](https://github.com/BradenM/pydngconverter/commit/4b7abdf866eca600aa68b54119b1833a608f0a8c))
+
 ## [Unreleased]
 
 ### Bug Fixes
@@ -15,7 +40,6 @@
 - **publish:** add publish release workflow.
 - **release:** add release-please flow
 - **release:** add release-please manifest
-- **release:** fix actions repo
 - **renovate:** update renovate config.
 
 ### Features
