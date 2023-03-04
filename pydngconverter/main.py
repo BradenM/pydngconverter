@@ -4,17 +4,16 @@
 
 import asyncio
 import logging
+import itertools
 from os import PathLike
+from typing import Union, Optional
 from pathlib import Path
-from typing import Optional, Union
 
 import psutil
 from rich.logging import RichHandler
-import itertools
 
-from pydngconverter import utils, compat, dngconverter
+from pydngconverter import flags, utils, compat, dngconverter
 from pydngconverter.dngconverter import DNGParameters
-from pydngconverter import flags
 
 try:
     from wand.image import Image
@@ -102,8 +101,7 @@ class DNGConverter:
             source_directory=self.source, dest_directory=Path(dest) if dest else None
         )
         self.max_workers = max_workers or psutil.cpu_count()
-        self._loop = asyncio.get_event_loop()
-        self._queue = asyncio.Queue(loop=self._loop)
+        self._queue = asyncio.Queue()
 
     @property
     def will_extract(self) -> bool:
