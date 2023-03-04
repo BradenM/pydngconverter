@@ -47,7 +47,7 @@ class DNGParameters:
 
     @property
     def linear_flag(self) -> Optional[str]:
-        if self.fast_load:
+        if self.linear:
             return "-l"
 
     @property
