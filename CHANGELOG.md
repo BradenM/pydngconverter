@@ -10,6 +10,7 @@
 - **chlog:** add changelog generation workflow.
 - **main:** add missed install step.
 - **main:** update main test workflow.
+- **renovate:** update renovate config.
 
 ### Features
 - **deps:** add pre-commit dev dep.
