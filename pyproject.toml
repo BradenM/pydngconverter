@@ -101,9 +101,16 @@ addopts = "-ra -vv"
 source = "pydngconverter"
 
 [tool.coverage.report]
-exclude_lines = """
-	if __name__ == .__main__.:
-	"""
+exclude_lines = [
+    "if __name__ == .__main__.:",
+    'class .*\bProtocol\):',
+    'raise NotImplementedError',
+    'raise AssertionError',
+    'def __repr__',
+    'noqa',
+    '@(abc\.)?abstractmethod',
+    'pragma: no cover'
+]
 
 [build-system]
 requires = ["poetry-core"]
