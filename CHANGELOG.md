@@ -3,6 +3,7 @@
 
 ### Bug Fixes
 - **deps:** update black/mypy versions
+- **dng:** linear flag should depend on linear option, not fast load.
 - **main:** remove sub py3.9 asyncio queue loop parameter.
 - **pkg:** dep version constraints
 
@@ -13,6 +14,7 @@
 - **renovate:** update renovate config.
 
 ### Features
+- **deps:** update rich/typing-extensions
 - **deps:** add pre-commit dev dep.
 - **dx:** add ruff config.
 - **pkg:** update troves, update includes.
