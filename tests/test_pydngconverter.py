@@ -53,7 +53,7 @@ def test_init_setup(with_scenarios, mocker: MockFixture):
         assert mock_resolve.call_count == 2
 
 
-default_args = ["-c", "-cr11.2", "-dng1.4", "-p1"]
+default_args = ["-c", "-cr14.0", "-dng1.6", "-p1"]
 
 
 class DNGParamCase(NamedTuple):
