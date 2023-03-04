@@ -59,6 +59,27 @@ sphinx-autodoc-typehints = "^1.11.1"
 recommonmark = "^0.7.1"
 sphinx_rtd_theme = "^0.5.1"
 
+[tool.ruff]
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    # "I",  # isort
+    # "D",  # pydocstyle
+    "UP", # pyupgrade
+    "C",  # flake8-comprehensions
+    "B",  # flake8-bugbear
+    "PT",  # flake8-pytest-style
+    "RUF" # ruff specific rules
+]
+ignore = [
+    "E501", # line too long - let black handle.
+    "C901", # too complex
+    "C408", # rewrite as literal; makes comprehensions harder sometimes imo
+]
+line-length = 100
+target-version = 'py38'
+src = ['pydngconverter']
 
 [tool.black]
 line-length = 100
