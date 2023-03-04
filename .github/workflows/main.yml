@@ -39,6 +39,9 @@ jobs:
           python-version: ${{ matrix.python }}
           cache: "poetry"
 
+      - name: Install Dependencies
+        run: poetry install -vv
+
       - name: Run Tests
         run: poetry run pytest --cov --cov-config=pyproject.toml --junit-xml=test_log.xml --cov-report=xml:cov.xml -vv -ra
 
