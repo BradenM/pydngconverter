@@ -1,0 +1,19 @@
+name: Release
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+
+jobs:
+  release-please:
+    name: Release Please
+    runs-on: ubuntu-latest
+    steps:
+      - name: Release Please
+        id: release-please
+        uses: googleapis/release-please-action@v3
+        with:
+          token: ${{ secrets.GH_PAT }}
+          command: manifest
