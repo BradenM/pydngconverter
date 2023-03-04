@@ -4,26 +4,27 @@ version = "0.2.0"
 description = "Python Interface for the Adobe's DNG Converter"
 authors = ["Braden Mars <bradenmars@bradenmars.me>"]
 license = "MIT"
-
-
 readme = "README.md"
 homepage = "https://github.com/BradenM/pydngconverter"
 repository = "https://github.com/BradenM/pydngconverter"
 documentation = "https://bradenm.github.io/pydngconverter"
-
 keywords = ["pydng", "dng", "dngconverter", "raw", "api"]
 classifiers = [
+    "Programming Language :: Python :: Implementation :: CPython",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
     "Intended Audience :: Developers",
     "Intended Audience :: Other Audience",
     "License :: OSI Approved :: MIT License",
     "Topic :: Scientific/Engineering :: Image Processing",
 ]
-
 include = [
-    "README.md", "LICENSE",
-    "pydngconverter/*"
+    { path = "tests", format = "sdist" },
+    "README.md",
+    "LICENSE"
 ]
 
 [tool.poetry.dependencies]
