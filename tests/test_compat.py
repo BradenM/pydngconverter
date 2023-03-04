@@ -28,11 +28,11 @@ def platform_paths(mock_platform):
     map = {
         "Linux": (
             "/unix/path",
-            r"Z:\\unix\\path",
+            r"Z:\unix\path",
         ),
         "Windows": (
-            r"Z:\\win\\path",
-            r"Z:\\win\\path",
+            r"Z:\win\path",
+            r"Z:\win\path",
         ),
         "Darwin": ("/unix/path", "/unix/path"),
     }
