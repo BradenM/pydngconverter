@@ -23,7 +23,7 @@ def mock_platform(request: pytest.FixtureRequest, mocker: MockFixture):
     return request.param
 
 
-@pytest.fixture
+@pytest.fixture()
 def platform_paths(mock_platform):
     map = {
         "Linux": (
@@ -39,7 +39,7 @@ def platform_paths(mock_platform):
     return mock_platform, *map[mock_platform]
 
 
-@pytest.fixture
+@pytest.fixture()
 def platform_apps(mock_platform):
     map = {
         "Linux": "/usr/bin/ExampleApp",
@@ -49,7 +49,7 @@ def platform_apps(mock_platform):
     return mock_platform, map[mock_platform]
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_get_compat_path(mocker: MockFixture, platform_paths):
     platform, in_path, expect_path = platform_paths
     mock_proc = mocker.AsyncMock()

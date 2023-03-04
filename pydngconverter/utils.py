@@ -50,14 +50,14 @@ def timeit(func):  # pragma: no cover
 
     async def process(func, *args, **params):
         if asyncio.iscoroutinefunction(func):
-            logger.debug("this function is a coroutine: {}".format(func.__name__))
+            logger.debug(f"this function is a coroutine: {func.__name__}")
             return await func(*args, **params)
         else:
             logger.debug("this is not a coroutine")
             return func(*args, **params)
 
     async def helper(*args, **params):
-        logger.info("{}.time".format(func.__name__))
+        logger.info(f"{func.__name__}.time")
         start = time.time()
         result = await process(func, *args, **params)
 

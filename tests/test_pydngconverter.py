@@ -17,7 +17,7 @@ ARG_SCENARIOS = [
 ]
 
 
-@pytest.fixture
+@pytest.fixture()
 def with_mock_source(tmp_path):
     root_p = tmp_path / "mocksource"
     root_p.mkdir(exist_ok=True)
