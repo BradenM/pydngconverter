@@ -1,12 +1,10 @@
-# -*- coding: utf-8 -*-
-
 """PyDNGConverter interface bridges for Adobe DNG Converter."""
 
-from dataclasses import dataclass, field
+from typing import List, Iterator, Optional
 from pathlib import Path
-from typing import List, Optional, Iterator
+from dataclasses import field, dataclass
 
-from pydngconverter.flags import DNGVersion, CRawCompat, Compression, JPEGPreview, LossyCompression
+from pydngconverter.flags import CRawCompat, DNGVersion, Compression, JPEGPreview, LossyCompression
 
 
 @dataclass

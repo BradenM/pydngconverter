@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """PyDNGConverter Flag Enums.
 
 Provides mappings for Adobe DNG Converter's parameters.

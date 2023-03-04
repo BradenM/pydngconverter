@@ -1,17 +1,16 @@
-# -*- coding: utf-8 -*-
 """PyDNGConverter Compatibility module.
 
 Handles platform-specific operations.
 """
 
+import os
 import asyncio
 import logging
-import os
 import platform
 from copy import deepcopy
 from enum import Enum, auto
+from typing import List, Union, Optional
 from pathlib import Path
-from typing import Union, List, Optional
 
 from pydngconverter import utils
 

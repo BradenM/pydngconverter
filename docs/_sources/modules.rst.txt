@@ -10,4 +10,3 @@ API Reference
     pydngconverter.flags
     pydngconverter.compat
     pydngconverter.utils
-
