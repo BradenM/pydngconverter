@@ -47,6 +47,7 @@ mypy = "^1.0.1"
 pytest-sugar = "^0.9.4"
 pytest-cov = "^2.11.1"
 bump2version = "^1.0.1"
+pre-commit = "^3.1.1"
 
 
 [tool.poetry.group.docs]
@@ -93,7 +94,6 @@ length_sort = true
 skip_glob = ["pydngconverter/lib/**/*"]
 
 [tool.pytest.ini_options]
-collect_ignore = ['setup.py']
 testpaths = "tests"
 addopts = "-ra -vv"
 
