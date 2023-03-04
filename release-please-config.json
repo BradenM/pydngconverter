@@ -1,0 +1,72 @@
+{
+    "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+    "release-type": "python",
+    "prerelease": true,
+    "include-v-in-tag": true,
+    "bootstrap-sha": "4d0e913d1411075b589e5975e60f42ad7dc2d7e4",
+    "changelog-sections": [
+        {
+            "type": "feat",
+            "section": "Features"
+        },
+        {
+            "type": "feature",
+            "section": "Features"
+        },
+        {
+            "type": "fix",
+            "section": "Bug Fixes"
+        },
+        {
+            "type": "perf",
+            "section": "Performance Improvements"
+        },
+        {
+            "type": "revert",
+            "section": "Reverts"
+        },
+        {
+            "type": "docs",
+            "section": "Documentation",
+            "hidden": false
+        },
+        {
+            "type": "style",
+            "section": "Styles",
+            "hidden": true
+        },
+        {
+            "type": "chore",
+            "section": "Miscellaneous Chores",
+            "hidden": true
+        },
+        {
+            "type": "refactor",
+            "section": "Code Refactoring",
+            "hidden": false
+        },
+        {
+            "type": "test",
+            "section": "Tests",
+            "hidden": true
+        },
+        {
+            "type": "build",
+            "section": "Build System",
+            "hidden": true
+        },
+        {
+            "type": "ci",
+            "section": "Continuous Integration",
+            "hidden": true
+        }
+    ],
+    "plugins": [
+        {
+            "type": "sentence-case"
+        }
+    ],
+    "packages": {
+        ".": {}
+    }
+}
