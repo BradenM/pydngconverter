@@ -78,7 +78,7 @@ exclude = '''
     | _build
     | build
     | dist
-    | pydngconverter/lib
+    | docs
   )/
   | foo.py           # also separately exclude a file named foo.py in
                      # the root of the project
