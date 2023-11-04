@@ -1354,18 +1354,18 @@ test = ["covdefaults (>=2.2.2)", "coverage (>=7.1)", "coverage-enable-subprocess
 
 [[package]]
 name = "wand"
-version = "0.6.12"
+version = "0.6.13"
 description = "Ctypes-based simple MagickWand API binding for Python"
 category = "main"
 optional = false
-python-versions = ">=3.7"
+python-versions = "*"
 files = [
-    {file = "Wand-0.6.12-py2.py3-none-any.whl", hash = "sha256:8d981dcd30b2c16b5df6dc3e746d8cd01f5750a2717b80b3f68cbe9b9dc24649"},
-    {file = "Wand-0.6.12.tar.gz", hash = "sha256:d6959dae12b875210cd31f4ff6b4802f81e51a90703d58881f8e8d69b043453b"},
+    {file = "Wand-0.6.13-py2.py3-none-any.whl", hash = "sha256:e5dda0ac2204a40c29ef5c4cb310770c95d3d05c37b1379e69c94ea79d7d19c0"},
+    {file = "Wand-0.6.13.tar.gz", hash = "sha256:f5013484eaf7a20eb22d1821aaefe60b50cc329722372b5f8565d46d4aaafcca"},
 ]
 
 [package.extras]
-doc = ["Sphinx (>=7.2.6)"]
+doc = ["Sphinx (>=5.3.0)"]
 test = ["pytest (>=7.2.0)"]
 
 [[package]]
