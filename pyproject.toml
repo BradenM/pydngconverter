@@ -57,7 +57,7 @@ optional = true
 sphinx = "^6.0.0"
 sphinx-autodoc-typehints = "^1.11.1"
 recommonmark = "^0.7.1"
-sphinx_rtd_theme = "^1.0.0"
+sphinx_rtd_theme = "^2.0.0"
 
 [tool.ruff]
 select = [
